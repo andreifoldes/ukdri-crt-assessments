@@ -35,3 +35,25 @@ test("lawtonSum sums the 0/1 option values across 8 categories", () => {
   const responses = { L0: 1, L1: 1, L2: 0, L3: 1, L4: 1, L5: 1, L6: 0, L7: 1 };
   assert.equal(S.lawtonSum(items, responses), 6);
 });
+
+test("parseTimeToMinutes handles 24h and AM/PM", () => {
+  assert.equal(S.parseTimeToMinutes("23:00"), 23 * 60);
+  assert.equal(S.parseTimeToMinutes("07:00"), 7 * 60);
+  assert.equal(S.parseTimeToMinutes("11:00 PM"), 23 * 60);
+  assert.equal(S.parseTimeToMinutes("7:30am"), 7 * 60 + 30);
+  assert.equal(S.parseTimeToMinutes("12:00 AM"), 0);
+  assert.equal(S.parseTimeToMinutes("12:00 PM"), 12 * 60);
+});
+
+test("parseTimeToMinutes rejects junk", () => {
+  assert.equal(S.parseTimeToMinutes(""), null);
+  assert.equal(S.parseTimeToMinutes("banana"), null);
+  assert.equal(S.parseTimeToMinutes("25:00"), null);
+});
+
+test("hoursInBed computes forward overnight difference", () => {
+  assert.equal(S.hoursInBed("23:00", "07:00"), 8);   // wraps midnight
+  assert.equal(S.hoursInBed("22:30", "06:30"), 8);
+  assert.equal(S.hoursInBed("01:00", "09:00"), 8);   // same calendar day
+  assert.equal(S.hoursInBed("23:00", "23:00"), 24);  // edge: equal times → 24h
+});
