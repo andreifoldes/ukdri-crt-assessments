@@ -1,0 +1,10 @@
+:root { --fg: #1a1a1a; --muted: #666; --accent: #2a5db0; }
+* { box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--fg); line-height: 1.5; margin: 0; background: #fafafa; }
+.container { max-width: 760px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+h1 { font-size: 1.6rem; }
+.muted { color: var(--muted); } .small { font-size: 0.9rem; }
+button.primary { font: inherit; font-weight: 600; background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 0.6rem 1.2rem; cursor: pointer; margin: 0.25rem 0.5rem 0.25rem 0; }
+button.primary:hover { filter: brightness(1.07); }
+.done { padding: 1rem 0; }
+[hidden] { display: none !important; }
