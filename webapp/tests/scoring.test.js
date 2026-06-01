@@ -29,3 +29,9 @@ test("hadsSubscales sums values by subscale tag", () => {
   const responses = { h1: 3, h2: 1, h3: 2, h4: 0 };
   assert.deepEqual(S.hadsSubscales(items, responses), { anxiety: 5, depression: 1 });
 });
+
+test("lawtonSum sums the 0/1 option values across 8 categories", () => {
+  const items = Array.from({ length: 8 }, (_, i) => ({ id: "L" + i }));
+  const responses = { L0: 1, L1: 1, L2: 0, L3: 1, L4: 1, L5: 1, L6: 0, L7: 1 };
+  assert.equal(S.lawtonSum(items, responses), 6);
+});

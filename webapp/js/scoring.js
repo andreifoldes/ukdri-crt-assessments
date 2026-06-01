@@ -17,7 +17,9 @@
     }
     return out;
   }
-  function lawtonSum(items, responses) { return 0; }
+  function lawtonSum(items, responses) {
+    return sumScore(items, responses);
+  }
   function psqiScore(responses) { return { c1: 0, c2: 0, c3: 0, c4: 0, c5: 0, c6: 0, c7: 0, global: 0 }; }
   function bandFor(instrumentId, scores) { return {}; }
   function parseTimeToMinutes(str) { return null; }
