@@ -20,7 +20,70 @@
   function lawtonSum(items, responses) {
     return sumScore(items, responses);
   }
-  function psqiScore(responses) { return { c1: 0, c2: 0, c3: 0, c4: 0, c5: 0, c6: 0, c7: 0, global: 0 }; }
+  function _num(v) { return Number.isFinite(v) ? v : (Number.isFinite(+v) ? +v : null); }
+
+  function _bandFromSum(sum, b1, b2, b3) {
+    // 0 -> 0; [1..b1] -> 1; [b1+1..b2] -> 2; [b2+1..b3] -> 3
+    if (sum <= 0) return 0;
+    if (sum <= b1) return 1;
+    if (sum <= b2) return 2;
+    return 3;
+  }
+
+  function psqiScore(responses) {
+    const r = responses || {};
+
+    // C1 — subjective sleep quality
+    const c1 = _num(r.q6_quality) || 0;
+
+    // C2 — sleep latency
+    const q2 = _num(r.q2_latency_min);
+    let q2new;
+    if (q2 === null) q2new = 0;
+    else if (q2 <= 15) q2new = 0;
+    else if (q2 <= 30) q2new = 1;
+    else if (q2 <= 60) q2new = 2;
+    else q2new = 3;
+    const c2 = _bandFromSum(q2new + (_num(r.q5a) || 0), 2, 4, 6);
+
+    // C3 — sleep duration (note: 7h scores 1, not 0)
+    const q4 = _num(r.q4_hours_sleep);
+    let c3;
+    if (q4 === null) c3 = 0;
+    else if (q4 > 7) c3 = 0;
+    else if (q4 > 6) c3 = 1;
+    else if (q4 > 5) c3 = 2;
+    else c3 = 3;
+
+    // C4 — habitual sleep efficiency
+    const tib = hoursInBed(r.q1_bedtime, r.q3_risetime);
+    let c4 = 0;
+    if (tib && tib > 0 && q4 !== null) {
+      let eff = (q4 / tib) * 100;
+      if (eff > 100) eff = 100;                 // clamp
+      if (eff >= 85) c4 = 0;
+      else if (eff >= 75) c4 = 1;
+      else if (eff >= 65) c4 = 2;
+      else c4 = 3;
+    }
+
+    // C5 — sleep disturbances (q5b..q5j; q5j = 0 if value OR comment missing)
+    const distbKeys = ["q5b", "q5c", "q5d", "q5e", "q5f", "q5g", "q5h", "q5i"];
+    let distbSum = distbKeys.reduce((t, k) => t + (_num(r[k]) || 0), 0);
+    const q5j = _num(r.q5j);
+    const q5jText = typeof r.q5j_text === "string" ? r.q5j_text.trim() : "";
+    if (q5j !== null && q5jText !== "") distbSum += q5j;   // else Q5j contributes 0
+    const c5 = _bandFromSum(distbSum, 9, 18, 27);
+
+    // C6 — use of sleeping medication
+    const c6 = _num(r.q7_medication) || 0;
+
+    // C7 — daytime dysfunction
+    const c7 = _bandFromSum((_num(r.q8_stayawake) || 0) + (_num(r.q9_enthusiasm) || 0), 2, 4, 6);
+
+    const global = c1 + c2 + c3 + c4 + c5 + c6 + c7;
+    return { c1, c2, c3, c4, c5, c6, c7, global };
+  }
   function bandFor(instrumentId, scores) { return {}; }
   function parseTimeToMinutes(str) {
     if (typeof str !== "string") return null;

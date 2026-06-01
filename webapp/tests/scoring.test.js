@@ -57,3 +57,47 @@ test("hoursInBed computes forward overnight difference", () => {
   assert.equal(S.hoursInBed("01:00", "09:00"), 8);   // same calendar day
   assert.equal(S.hoursInBed("23:00", "23:00"), 24);  // edge: equal times → 24h
 });
+
+test("psqiScore computes all 7 components + global (worked example)", () => {
+  const r = {
+    q1_bedtime: "23:00", q3_risetime: "07:00",   // 8h in bed
+    q2_latency_min: 20,                            // Q2new = 1
+    q4_hours_sleep: 7,                             // DURAT: >6 → 1; eff = 7/8 = 87.5% → 0
+    q5a: 1,                                        // LATEN sum = 1+1 = 2 → 1
+    q5b: 1, q5c: 1, q5d: 1, q5e: 1, q5f: 1, q5g: 1, q5h: 1, q5i: 1, // 8
+    q5j: 2, q5j_text: "noise",                     // counted → DISTB sum = 10 → 2
+    q6_quality: 1,                                 // SLPQUAL = 1
+    q7_medication: 0,                              // MEDS = 0
+    q8_stayawake: 1, q9_enthusiasm: 1,             // DAYDYS sum = 2 → 1
+  };
+  const s = S.psqiScore(r);
+  assert.equal(s.c1, 1, "C1 SLPQUAL");
+  assert.equal(s.c2, 1, "C2 LATEN");
+  assert.equal(s.c3, 1, "C3 DURAT");
+  assert.equal(s.c4, 0, "C4 HSE");
+  assert.equal(s.c5, 2, "C5 DISTB");
+  assert.equal(s.c6, 0, "C6 MEDS");
+  assert.equal(s.c7, 1, "C7 DAYDYS");
+  assert.equal(s.global, 6, "global = sum of components");
+});
+
+test("psqiScore sets Q5j to 0 when its comment text is missing", () => {
+  const base = {
+    q1_bedtime: "23:00", q3_risetime: "07:00", q2_latency_min: 20, q4_hours_sleep: 7,
+    q5a: 1, q5b: 1, q5c: 1, q5d: 1, q5e: 1, q5f: 1, q5g: 1, q5h: 1, q5i: 1,
+    q5j: 3,                       // value present but NO q5j_text → treated as 0
+    q6_quality: 1, q7_medication: 0, q8_stayawake: 1, q9_enthusiasm: 1,
+  };
+  const s = S.psqiScore(base);
+  assert.equal(s.c5, 1, "DISTB sum = 8 (q5j ignored) → band 1");
+});
+
+test("psqiScore clamps efficiency above 100%", () => {
+  const r = {
+    q1_bedtime: "23:00", q3_risetime: "06:00",   // 7h in bed
+    q2_latency_min: 5, q4_hours_sleep: 8,         // slept > in bed → clamp 100% → C4 = 0
+    q5a: 0, q5b: 0, q5c: 0, q5d: 0, q5e: 0, q5f: 0, q5g: 0, q5h: 0, q5i: 0, q5j: 0,
+    q6_quality: 0, q7_medication: 0, q8_stayawake: 0, q9_enthusiasm: 0,
+  };
+  assert.equal(S.psqiScore(r).c4, 0);
+});
