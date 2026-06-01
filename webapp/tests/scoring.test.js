@@ -101,3 +101,25 @@ test("psqiScore clamps efficiency above 100%", () => {
   };
   assert.equal(S.psqiScore(r).c4, 0);
 });
+
+test("bandFor returns correct severity labels", () => {
+  assert.deepEqual(S.bandFor("phq9", { total: 0 }), { total: "minimal" });
+  assert.deepEqual(S.bandFor("phq9", { total: 7 }), { total: "mild" });
+  assert.deepEqual(S.bandFor("phq9", { total: 12 }), { total: "moderate" });
+  assert.deepEqual(S.bandFor("phq9", { total: 17 }), { total: "moderately severe" });
+  assert.deepEqual(S.bandFor("phq9", { total: 22 }), { total: "severe" });
+
+  assert.deepEqual(S.bandFor("ess", { total: 9 }), { total: "normal" });
+  assert.deepEqual(S.bandFor("ess", { total: 11 }), { total: "borderline" });
+  assert.deepEqual(S.bandFor("ess", { total: 15 }), { total: "abnormal" });
+
+  assert.deepEqual(S.bandFor("hads", { anxiety: 5, depression: 9 }),
+    { anxiety: "normal", depression: "borderline" });
+  assert.deepEqual(S.bandFor("hads", { anxiety: 14, depression: 2 }),
+    { anxiety: "case", depression: "normal" });
+
+  assert.deepEqual(S.bandFor("psqi", { global: 5 }), { global: "good sleep" });
+  assert.deepEqual(S.bandFor("psqi", { global: 6 }), { global: "poor sleep" });
+
+  assert.deepEqual(S.bandFor("lawton", { total: 4 }), { total: null });
+});

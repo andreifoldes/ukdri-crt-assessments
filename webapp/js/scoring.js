@@ -84,7 +84,34 @@
     const global = c1 + c2 + c3 + c4 + c5 + c6 + c7;
     return { c1, c2, c3, c4, c5, c6, c7, global };
   }
-  function bandFor(instrumentId, scores) { return {}; }
+  function _phq9Band(t) {
+    if (t <= 4) return "minimal";
+    if (t <= 9) return "mild";
+    if (t <= 14) return "moderate";
+    if (t <= 19) return "moderately severe";
+    return "severe";
+  }
+  function _essBand(t) {
+    if (t <= 10) return "normal";
+    if (t <= 12) return "borderline";
+    return "abnormal";
+  }
+  function _hadsBand(t) {
+    if (t <= 7) return "normal";
+    if (t <= 10) return "borderline";
+    return "case";
+  }
+
+  function bandFor(instrumentId, scores) {
+    switch (instrumentId) {
+      case "phq9": return { total: _phq9Band(scores.total) };
+      case "ess":  return { total: _essBand(scores.total) };
+      case "hads": return { anxiety: _hadsBand(scores.anxiety), depression: _hadsBand(scores.depression) };
+      case "psqi": return { global: scores.global > 5 ? "poor sleep" : "good sleep" };
+      case "lawton": return { total: null };  // no standard band
+      default: return {};
+    }
+  }
   function parseTimeToMinutes(str) {
     if (typeof str !== "string") return null;
     const s = str.trim().toLowerCase();
