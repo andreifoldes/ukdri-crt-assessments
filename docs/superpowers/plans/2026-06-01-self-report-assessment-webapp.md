@@ -44,7 +44,7 @@ webapp/
 as a browser global *and* as a Node `module.exports`. Test files are CommonJS
 (`tests/*.test.js`) and `require()` the source directly. There is **no
 `package.json`** in `webapp/` (so Node treats `.js` as CommonJS). Run all tests
-with `node --test webapp/tests/`.
+with `node --test webapp/tests/*.test.js`.
 
 The dual-export wrapper used by every source file:
 
@@ -1278,7 +1278,7 @@ Expected: PASS (all core tests).
 
 - [ ] **Step 5: Run the whole suite + commit**
 
-Run: `node --test webapp/tests/`
+Run: `node --test webapp/tests/*.test.js`
 Expected: PASS (scoring + instruments + core).
 
 ```bash
@@ -1673,7 +1673,7 @@ Then add the bootstrap function:
 
 - [ ] **Step 3: Re-run the Node suite to confirm no regressions**
 
-Run: `node --test webapp/tests/`
+Run: `node --test webapp/tests/*.test.js`
 Expected: PASS — the controller is guarded by `typeof document !== "undefined"`,
 so Node still only exercises the pure API (`makeToken`, `nextAttempt`, `shuffle`,
 `scoreInstrument`, `buildResults`, `toCSVRow`).
@@ -1832,7 +1832,7 @@ vendoring step in the implementation plan) and update the version above.
 
 ## Tests
 
-    node --test webapp/tests/
+    node --test webapp/tests/*.test.js
 ```
 
 - [ ] **Step 6: Commit**
