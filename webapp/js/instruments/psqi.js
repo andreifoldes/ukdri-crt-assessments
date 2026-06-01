@@ -28,6 +28,7 @@
       { id: "q2_latency_min", type: "text", format: "number", text: "During the past month, how long (in minutes) has it usually taken you to fall asleep each night?" },
       { id: "q3_risetime", type: "text", format: "time", text: "During the past month, what time have you usually gotten up in the morning? (e.g. 07:00 or 7:00 AM)" },
       { id: "q4_hours_sleep", type: "text", format: "number", text: "During the past month, how many hours of actual sleep did you get at night? (This may be different than the number of hours you spent in bed.)" },
+      // q5_header is type "static" (display-only); the scorer and export skip type==="static" items.
       { id: "q5_header", type: "static", text: "During the past month, how often have you had trouble sleeping because you…" },
       ...disturbance,
       { id: "q5j", type: "choice", text: "Other reason(s), please describe — then rate how often you had trouble sleeping because of this:", options: freq, group: "q5", commentId: "q5j_text", commentLabel: "Other reason(s)" },

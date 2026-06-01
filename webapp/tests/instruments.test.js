@@ -90,3 +90,14 @@ test("PSQI config: scored item set, types, and frequency values", () => {
   // q5j carries an optional comment field id
   assert.equal(item("q5j").commentId, "q5j_text");
 });
+
+test("instrument files fall back to __INSTRUMENT_QUEUE__ when registerInstrument is absent", () => {
+  const saved = global.registerInstrument;
+  delete global.registerInstrument;
+  globalThis.__INSTRUMENT_QUEUE__ = [];
+  delete require.cache[require.resolve("../js/instruments/ess.js")];
+  require("../js/instruments/ess.js");
+  assert.equal(globalThis.__INSTRUMENT_QUEUE__.length, 1);
+  assert.equal(globalThis.__INSTRUMENT_QUEUE__[0].id, "ess");
+  global.registerInstrument = saved;
+});
