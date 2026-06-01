@@ -107,7 +107,145 @@
     return header.map(_csvEscape).join(",") + "\n" + row.map(_csvEscape).join(",") + "\n";
   }
 
+  // ---------- browser-only: state + storage ----------
+  const STORE_KEY = "ssrc_assessment_v1";
+  const registry = [];
+  const defsById = {};
+
+  function registerInstrument(def) { registry.push(def); defsById[def.id] = def; }
+
+  function readStore() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      return { store: raw ? JSON.parse(raw) : {}, persistent: true };
+    } catch (e) { return { store: {}, persistent: false }; }
+  }
+  function writeStore(store) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); return true; }
+    catch (e) { return false; }
+  }
+  function ensureToken() {
+    const { store, persistent } = readStore();
+    if (!store.token) { store.token = makeToken(); writeStore(store); }
+    return { token: store.token, completed: store.completed || 0, persistent };
+  }
+  function resetParticipant() {
+    const { store } = readStore();
+    store.token = makeToken(); store.completed = 0; writeStore(store);
+  }
+  function recordCompletion() {
+    const { store } = readStore();
+    store.completed = (store.completed || 0) + 1; writeStore(store);
+  }
+
+  // ---------- browser-only: helpers ----------
+  function splitData(order, data) {
+    // SurveyJS data is flat {questionName: value}; split into per-instrument maps.
+    const byInstrument = {};
+    for (const id of order) {
+      const def = defsById[id];
+      const responses = {};
+      for (const item of def.items) {
+        if (item.type === "static") continue;
+        if (data[item.id] !== undefined) responses[item.id] = data[item.id];
+        if (item.commentId && data[item.commentId] !== undefined) responses[item.commentId] = data[item.commentId];
+      }
+      byInstrument[id] = responses;
+    }
+    return byInstrument;
+  }
+
+  function autofillData(order) {
+    const data = {};
+    for (const id of order) {
+      for (const item of defsById[id].items) {
+        if (item.type === "static") continue;
+        if (item.type === "choice") {
+          const opts = item.options || defsById[id].responseSets[item.responseSet];
+          data[item.id] = opts[Math.floor(Math.random() * opts.length)].value;
+          if (item.commentId) data[item.commentId] = "auto";
+        } else if (item.format === "time") {
+          data[item.id] = item.id === "q3_risetime" ? "07:00" : "23:00";
+        } else if (item.format === "number") {
+          data[item.id] = item.id === "q4_hours_sleep" ? 7 : 20;
+        }
+      }
+    }
+    return data;
+  }
+
+  function download(filename, text, type) {
+    const blob = new Blob([text], { type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+  }
+
+  function startApp() {
+    const q = global.__INSTRUMENT_QUEUE__ || [];
+    q.forEach(registerInstrument); q.length = 0;
+
+    const landing = document.getElementById("screen-landing");
+    const container = document.getElementById("surveyContainer");
+
+    const info = ensureToken();
+    const attempt = nextAttempt({ completed: info.completed });
+    document.getElementById("attempt-note").textContent =
+      "This will be attempt " + attempt +
+      (info.persistent ? "" : " — note: persistent storage is unavailable, so test-retest pairing may not work.");
+
+    document.getElementById("reset-link").addEventListener("click", (e) => {
+      e.preventDefault(); resetParticipant(); location.reload();
+    });
+
+    // Latest results held for the completion-page download buttons (event delegation).
+    let latest = null;
+    document.addEventListener("click", (e) => {
+      if (!latest) return;
+      if (e.target && e.target.id === "dl-json")
+        download(latest.base + ".json", JSON.stringify(latest.results, null, 2), "application/json");
+      if (e.target && e.target.id === "dl-csv")
+        download(latest.base + ".csv", toCSVRow(latest.results), "text/csv");
+    });
+
+    const debug = new URLSearchParams(location.search).get("debug") === "1";
+
+    document.getElementById("begin-btn").addEventListener("click", () => {
+      const order = shuffle(registry.map((d) => d.id));
+      const completedHtml =
+        '<div class="done"><h2>Thank you</h2>' +
+        "<p>Your responses are complete. Please download your results file(s) and return them as instructed.</p>" +
+        '<button id="dl-json" class="primary" type="button">Download results (JSON)</button> ' +
+        '<button id="dl-csv" class="primary" type="button">Download results (CSV)</button></div>';
+
+      const survey = new Survey.Model(toSurveyJson(defsById, order, { completedHtml }));
+      if (debug) survey.data = autofillData(order);
+
+      survey.onComplete.add((sender) => {
+        const responsesByInstrument = splitData(order, sender.data);
+        const meta = {
+          participantToken: info.token, attempt,
+          storagePersistent: info.persistent, timestamp: new Date().toISOString(),
+        };
+        const results = buildResults(order, defsById, responsesByInstrument, meta);
+        recordCompletion();
+        latest = { results, base: "assessment-" + info.token + "-attempt" + attempt + "-" + meta.timestamp.replace(/[:.]/g, "-") };
+      });
+
+      landing.hidden = true;
+      container.hidden = false;
+      survey.render(container);
+    });
+  }
+
   const API = { makeToken, nextAttempt, shuffle, scoreInstrument, buildResults, toCSVRow };
   if (typeof module !== "undefined" && module.exports) module.exports = API;
   else Object.assign(global, API);
+
+  if (typeof document !== "undefined") {
+    global.registerInstrument = registerInstrument;
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", startApp);
+    else startApp();
+  }
 })(typeof window !== "undefined" ? window : globalThis);
