@@ -18,3 +18,14 @@ test("sumScore treats a missing response as 0", () => {
   const items = [{ id: "a" }, { id: "b" }];
   assert.equal(S.sumScore(items, { a: 2 }), 2);
 });
+
+test("hadsSubscales sums values by subscale tag", () => {
+  const items = [
+    { id: "h1", subscale: "anxiety" },
+    { id: "h2", subscale: "depression" },
+    { id: "h3", subscale: "anxiety" },
+    { id: "h4", subscale: "depression" },
+  ];
+  const responses = { h1: 3, h2: 1, h3: 2, h4: 0 };
+  assert.deepEqual(S.hadsSubscales(items, responses), { anxiety: 5, depression: 1 });
+});

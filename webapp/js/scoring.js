@@ -7,7 +7,16 @@
       return total + (Number.isFinite(v) ? v : 0);
     }, 0);
   }
-  function hadsSubscales(items, responses) { return { anxiety: 0, depression: 0 }; }
+  function hadsSubscales(items, responses) {
+    const out = { anxiety: 0, depression: 0 };
+    for (const item of items) {
+      const v = responses[item.id];
+      if (Number.isFinite(v) && (item.subscale === "anxiety" || item.subscale === "depression")) {
+        out[item.subscale] += v;
+      }
+    }
+    return out;
+  }
   function lawtonSum(items, responses) { return 0; }
   function psqiScore(responses) { return { c1: 0, c2: 0, c3: 0, c4: 0, c5: 0, c6: 0, c7: 0, global: 0 }; }
   function bandFor(instrumentId, scores) { return {}; }
