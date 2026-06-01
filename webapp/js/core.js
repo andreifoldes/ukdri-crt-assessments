@@ -8,9 +8,10 @@
 
   // ---------- pure helpers ----------
 
+  // Token is non-identifying (used only to pair a participant's two attempts); pseudo-randomness via Math.random is sufficient. randFn is injectable for tests.
   function makeToken(randFn) {
     const rnd = randFn || Math.random;
-    const hex = (n) => Math.floor(rnd() * 16 ** n).toString(16).padStart(n, "0");
+    const hex = (n) => { const max = 16 ** n; return (Math.floor(rnd() * max) % max).toString(16).padStart(n, "0"); };
     return "p_" + hex(8) + "-" + hex(4) + "-" + hex(4) + "-" + hex(8);
   }
 
@@ -20,14 +21,17 @@
   }
 
   function shuffle(array, randFn) {
+    const a = array.slice();
     const rnd = randFn || Math.random;
-    for (let i = array.length - 1; i > 0; i--) {
+    for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(rnd() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      [a[i], a[j]] = [a[j], a[i]];
     }
-    return array;
+    return a;
   }
 
+  // Precondition: def.scoring.rule is one of "sum" | "lawtonSum" | "hadsSubscales" | "psqi".
+  // Throws for any other rule; the caller must validate def first.
   function scoreInstrument(def, responses) {
     let scores;
     switch (def.scoring.rule) {
@@ -65,9 +69,11 @@
   }
 
   function buildResults(order, defsById, responsesByInstrument, meta) {
+    if (!meta || !meta.participantToken) throw new Error("buildResults: meta.participantToken is required");
     const instruments = {};
     for (const id of order) {
       const def = defsById[id];
+      if (!def) throw new Error(`buildResults: no definition found for instrument "${id}"`);
       const responses = responsesByInstrument[id] || {};
       const { scores, bands } = scoreInstrument(def, responses);
       instruments[id] = { responses: _responseRows(def, responses), scores, bands };
@@ -84,16 +90,17 @@
 
   function _csvEscape(v) {
     const s = v === null || v === undefined ? "" : String(v);
-    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
   }
 
   function toCSVRow(results) {
     const header = ["participantToken", "attempt", "storagePersistent", "timestamp", "presentationOrder"];
     const row = [results.participantToken, results.attempt, results.storagePersistent, results.timestamp,
       results.presentationOrder.join("|")];
-    for (const id of Object.keys(results.instruments)) {
+    for (const id of results.presentationOrder) {
       const block = results.instruments[id];
-      for (const r of block.responses) { header.push(id + "_item_" + r.itemId); row.push(r.value); }
+      if (!block) continue;
+      for (const r of block.responses) { header.push(id + "_item_" + r.itemId); row.push(r.value); } // CSV stores numeric values only; human-readable labels live in the JSON export
       for (const k of Object.keys(block.scores)) { header.push(id + "_score_" + k); row.push(block.scores[k]); }
       for (const k of Object.keys(block.bands)) { header.push(id + "_band_" + k); row.push(block.bands[k]); }
     }

@@ -4,7 +4,12 @@ const C = require("../js/core.js");
 
 test("makeToken produces a stable p_ prefixed id from injected randomness", () => {
   const t = C.makeToken(() => 0.5);
-  assert.match(t, /^p_[0-9a-f-]{6,}$/);
+  assert.match(t, /^p_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{8}$/);
+});
+
+test("makeToken with randFn returning near-1.0 still produces a valid token (overflow guard)", () => {
+  const t = C.makeToken(() => 0.999999);
+  assert.match(t, /^p_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{8}$/);
 });
 
 test("nextAttempt increments a numeric counter starting at 1", () => {
@@ -22,6 +27,13 @@ test("shuffle preserves the multiset and length (deterministic randFn)", () => {
   assert.deepEqual(out.slice().sort(), arr.slice().sort());
 });
 
+test("shuffle does not mutate the caller's input array", () => {
+  const arr = ["a", "b", "c", "d", "e"];
+  const original = arr.slice();
+  C.shuffle(arr, () => 0.5);
+  assert.deepEqual(arr, original);
+});
+
 test("scoreInstrument dispatches by rule and attaches bands", () => {
   const phq9 = { id: "phq9", items: [{ id: "a" }, { id: "b" }], scoring: { rule: "sum" } };
   const r = C.scoreInstrument(phq9, { a: 3, b: 2 });
@@ -32,6 +44,11 @@ test("scoreInstrument dispatches by rule and attaches bands", () => {
   const rh = C.scoreInstrument(hads, { x: 11, y: 3 });
   assert.deepEqual(rh.scores, { anxiety: 11, depression: 3 });
   assert.deepEqual(rh.bands, { anxiety: "case", depression: "normal" });
+});
+
+test("scoreInstrument throws on an unrecognised rule", () => {
+  const bogus = { id: "bogus", items: [], scoring: { rule: "bogus" } };
+  assert.throws(() => C.scoreInstrument(bogus, {}), /Unknown scoring rule/);
 });
 
 test("buildResults assembles metadata + per-instrument blocks", () => {
@@ -47,6 +64,28 @@ test("buildResults assembles metadata + per-instrument blocks", () => {
   assert.deepEqual(out.presentationOrder, ["phq9"]);
   assert.equal(out.instruments.phq9.scores.total, 4);
   assert.equal(out.instruments.phq9.bands.total, "minimal");
+});
+
+test("buildResults throws when order contains an id missing from defsById", () => {
+  const defsById = {
+    phq9: { id: "phq9", items: [{ id: "a" }], scoring: { rule: "sum" } },
+  };
+  assert.throws(
+    () => C.buildResults(["phq9", "missing_instrument"], defsById, {}, {
+      participantToken: "p_x", attempt: 1, storagePersistent: false, timestamp: "2026-06-01T00:00:00.000Z",
+    }),
+    /no definition found/
+  );
+});
+
+test("buildResults throws when meta lacks participantToken", () => {
+  const defsById = {
+    phq9: { id: "phq9", items: [{ id: "a" }], scoring: { rule: "sum" } },
+  };
+  assert.throws(
+    () => C.buildResults(["phq9"], defsById, {}, { attempt: 1, storagePersistent: false, timestamp: "2026-06-01T00:00:00.000Z" }),
+    /participantToken is required/
+  );
 });
 
 test("toCSVRow emits a header + value row with leading metadata", () => {
