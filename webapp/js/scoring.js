@@ -2,8 +2,9 @@
   "use strict";
 
   function sumScore(items, responses) {
+    const r = responses || {};
     return items.reduce((total, item) => {
-      const v = responses[item.id];
+      const v = r[item.id];
       return total + (Number.isFinite(v) ? v : 0);
     }, 0);
   }
@@ -17,13 +18,13 @@
     }
     return out;
   }
+  // Intentional alias for sumScore; kept separate in case sex-differentiated Lawton scoring is added later.
   function lawtonSum(items, responses) {
     return sumScore(items, responses);
   }
-  function _num(v) { return Number.isFinite(v) ? v : (Number.isFinite(+v) ? +v : null); }
+  function _num(v) { return Number.isFinite(v) ? v : null; }
 
-  function _bandFromSum(sum, b1, b2, b3) {
-    // 0 -> 0; [1..b1] -> 1; [b1+1..b2] -> 2; [b2+1..b3] -> 3
+  function _bandFromSum(sum, b1, b2) {
     if (sum <= 0) return 0;
     if (sum <= b1) return 1;
     if (sum <= b2) return 2;
@@ -44,7 +45,7 @@
     else if (q2 <= 30) q2new = 1;
     else if (q2 <= 60) q2new = 2;
     else q2new = 3;
-    const c2 = _bandFromSum(q2new + (_num(r.q5a) || 0), 2, 4, 6);
+    const c2 = _bandFromSum(q2new + (_num(r.q5a) || 0), 2, 4);
 
     // C3 — sleep duration (note: 7h scores 1, not 0)
     const q4 = _num(r.q4_hours_sleep);
@@ -73,18 +74,19 @@
     const q5j = _num(r.q5j);
     const q5jText = typeof r.q5j_text === "string" ? r.q5j_text.trim() : "";
     if (q5j !== null && q5jText !== "") distbSum += q5j;   // else Q5j contributes 0
-    const c5 = _bandFromSum(distbSum, 9, 18, 27);
+    const c5 = _bandFromSum(distbSum, 9, 18);
 
     // C6 — use of sleeping medication
     const c6 = _num(r.q7_medication) || 0;
 
     // C7 — daytime dysfunction
-    const c7 = _bandFromSum((_num(r.q8_stayawake) || 0) + (_num(r.q9_enthusiasm) || 0), 2, 4, 6);
+    const c7 = _bandFromSum((_num(r.q8_stayawake) || 0) + (_num(r.q9_enthusiasm) || 0), 2, 4);
 
     const global = c1 + c2 + c3 + c4 + c5 + c6 + c7;
     return { c1, c2, c3, c4, c5, c6, c7, global };
   }
   function _phq9Band(t) {
+    if (!Number.isFinite(t)) return null;
     if (t <= 4) return "minimal";
     if (t <= 9) return "mild";
     if (t <= 14) return "moderate";
@@ -92,22 +94,25 @@
     return "severe";
   }
   function _essBand(t) {
+    if (!Number.isFinite(t)) return null;
     if (t <= 10) return "normal";
     if (t <= 12) return "borderline";
     return "abnormal";
   }
   function _hadsBand(t) {
+    if (!Number.isFinite(t)) return null;
     if (t <= 7) return "normal";
     if (t <= 10) return "borderline";
     return "case";
   }
 
   function bandFor(instrumentId, scores) {
+    const s = scores || {};
     switch (instrumentId) {
-      case "phq9": return { total: _phq9Band(scores.total) };
-      case "ess":  return { total: _essBand(scores.total) };
-      case "hads": return { anxiety: _hadsBand(scores.anxiety), depression: _hadsBand(scores.depression) };
-      case "psqi": return { global: scores.global > 5 ? "poor sleep" : "good sleep" };
+      case "phq9": return { total: _phq9Band(s.total) };
+      case "ess":  return { total: _essBand(s.total) };
+      case "hads": return { anxiety: _hadsBand(s.anxiety), depression: _hadsBand(s.depression) };
+      case "psqi": return { global: s.global > 5 ? "poor sleep" : "good sleep" };
       case "lawton": return { total: null };  // no standard band
       default: return {};
     }

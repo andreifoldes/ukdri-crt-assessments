@@ -123,3 +123,28 @@ test("bandFor returns correct severity labels", () => {
 
   assert.deepEqual(S.bandFor("lawton", { total: 4 }), { total: null });
 });
+
+test("sumScore with null responses returns 0 and does not throw", () => {
+  const items = [{ id: "a" }, { id: "b" }];
+  assert.doesNotThrow(() => S.sumScore(items, null));
+  assert.equal(S.sumScore(items, null), 0);
+});
+
+test("hadsSubscales with one item's response missing does not inflate the subscale", () => {
+  const items = [
+    { id: "h1", subscale: "anxiety" },
+    { id: "h2", subscale: "depression" },
+  ];
+  // h2 response is missing — depression should be 0, not inflated
+  assert.deepEqual(S.hadsSubscales(items, { h1: 3 }), { anxiety: 3, depression: 0 });
+});
+
+test("bandFor('phq9', undefined) does not throw and returns { total: null }", () => {
+  assert.doesNotThrow(() => S.bandFor("phq9", undefined));
+  assert.deepEqual(S.bandFor("phq9", undefined), { total: null });
+});
+
+test("bandFor('hads', {}) returns { anxiety: null, depression: null }", () => {
+  assert.doesNotThrow(() => S.bandFor("hads", {}));
+  assert.deepEqual(S.bandFor("hads", {}), { anxiety: null, depression: null });
+});
