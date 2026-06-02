@@ -21,6 +21,14 @@
     return pick(C) + pick(V) + pick(C) + pick(V) + pick(C);
   }
 
+  // Normalise a user-entered ID: case-insensitive (upper-cased), letters only.
+  // Returns the canonical 5-letter code, or null if it isn't exactly 5 letters.
+  function normalizeToken(raw) {
+    if (typeof raw !== "string") return null;
+    const t = raw.toUpperCase().replace(/[^A-Z]/g, "");
+    return t.length === 5 ? t : null;
+  }
+
   function nextAttempt(store) {
     const completed = (store && Number.isFinite(store.completed)) ? store.completed : 0;
     return completed + 1;
@@ -146,6 +154,15 @@
     const { store } = readStore();
     store.completed = (store.completed || 0) + 1; writeStore(store);
   }
+  // Returning participant restoring the ID from their first visit (e.g. a new
+  // device/browser where the token didn't persist). Adopt the entered ID and
+  // mark this as at least a second attempt so the export labels it as a retest.
+  function setParticipantId(token) {
+    const { store } = readStore();
+    store.token = token;
+    store.completed = Math.max(store.completed || 0, 1);
+    writeStore(store);
+  }
 
   // ---------- browser-only: helpers ----------
   function splitData(order, data) {
@@ -209,6 +226,21 @@
       e.preventDefault(); resetParticipant(); location.reload();
     });
 
+    // Returning participant can restore the ID from their first visit (case-insensitive).
+    const idInput = document.getElementById("id-input");
+    const idFeedback = document.getElementById("id-feedback");
+    function applyEnteredId() {
+      const token = normalizeToken(idInput.value);
+      if (!token) {
+        idFeedback.textContent = "Please enter your 5-letter ID (letters only).";
+        return;
+      }
+      setParticipantId(token);
+      location.reload();
+    }
+    document.getElementById("set-id-btn").addEventListener("click", applyEnteredId);
+    idInput.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); applyEnteredId(); } });
+
     // Latest results held for the completion-page download buttons (event delegation).
     let latest = null;
     document.addEventListener("click", (e) => {
@@ -255,7 +287,7 @@
     });
   }
 
-  const API = { makeToken, nextAttempt, shuffle, scoreInstrument, buildResults, toCSVRow };
+  const API = { makeToken, normalizeToken, nextAttempt, shuffle, scoreInstrument, buildResults, toCSVRow };
   if (typeof module !== "undefined" && module.exports) module.exports = API;
   else Object.assign(global, API);
 

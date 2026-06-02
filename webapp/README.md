@@ -20,8 +20,15 @@ Each attendee completes the battery **twice on the same browser + device**
 random, non-identifying token is stored in `localStorage` and written into each
 export as `participantToken`, with `attempt` = 1 (baseline) or 2 (retest).
 Pair the two exports by `participantToken` and compare per-scale scores
-(e.g. ICC / Pearson). "Not you? Start as a new participant" issues a fresh token
-on shared devices.
+(e.g. ICC / Pearson). The token is an easy-to-read 5-letter code (e.g. `BAKOR`)
+shown on the landing and completion screens so participants can confirm it is the
+same on both visits.
+
+- **Returning participant whose ID looks different** (e.g. a different device, or
+  storage was cleared): they can type the ID from their first visit into
+  "Returning? Enter your existing ID". Entry is case-insensitive and ignores
+  punctuation/spaces; restoring an ID marks the session as a retest (attempt 2).
+- "Not you? Start as a new participant" issues a fresh token on shared devices.
 
 Notes:
 - The attempt counter is not capped: a third+ completion on the same browser is
