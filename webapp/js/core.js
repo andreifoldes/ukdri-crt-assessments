@@ -131,7 +131,7 @@
   const SCALE_META = [
     { key: "phq9", label: "PHQ-9", get: (s) => s.total },
     { key: "ess", label: "ESS", get: (s) => s.total },
-    { key: "hads", label: "HADS (A+D)", get: (s) => (Number(s.anxiety) || 0) + (Number(s.depression) || 0) },
+    { key: "hads", label: "HADS", get: (s) => (Number(s.anxiety) || 0) + (Number(s.depression) || 0) },
     { key: "lawton", label: "Lawton IADL", get: (s) => s.total },
     { key: "psqi", label: "PSQI", get: (s) => s.global },
   ];
