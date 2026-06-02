@@ -67,6 +67,20 @@ a thank-you only). Scoring follows the official rules, including the PSQI
 
 Approximate completion time for all five scales: **15–20 minutes**.
 
+## Data collection (Google Sheets)
+
+Each completed run is POSTed to a Google Apps Script web app that appends a
+row to a central sheet (see `../apps-script/README.md` for the one-time setup).
+The endpoint URL and a shared `formId` are injected at deploy time from the
+GitHub Actions secrets `SHEET_ENDPOINT` and `SHEET_FORM_ID` — committed source
+(`js/config.js`) holds placeholders only, because a static site cannot keep a
+real secret. The Apps Script self-extends the sheet's columns by name, so the
+randomised instrument order never misaligns them.
+
+If submission fails (offline, endpoint down, or running locally without the
+secrets), the completion screen reveals the local JSON/CSV download buttons and
+auto-downloads a copy so no run is ever lost.
+
 ## Editing item content
 
 Each scale is one file in `js/instruments/`. Edit the `text`/`options` there; the
