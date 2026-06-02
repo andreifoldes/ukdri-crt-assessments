@@ -12,6 +12,25 @@
 
 ---
 
+## Amendment (post-final-review): Lawton option identity
+
+A final review found that Lawton categories assign the same numeric value to
+multiple options within one radiogroup. SurveyJS keys selection by value, so
+duplicate values make distinct rows indistinguishable (wrong selection / wrong
+exported label). Fix applied in the built code (supersedes the Task 4 / Task 10 /
+Task 12 snippets below):
+
+- Lawton options use `{ label, value, score }` where `value` is a UNIQUE 0-based
+  index within the category and `score` is the form's 0/1.
+- `lawtonSum(items, responses)` resolves each item's chosen option by `value` and
+  sums its `score` (total 0–8) — it is no longer a `sumScore` alias.
+- `_responseRows` records an option's `score` (when present) as the exported value
+  and resolves the label from the now-unique value, so Lawton exports 0/1 + the
+  correct chosen label. Other instruments (no `score` field) are unchanged.
+
+Also applied: a once-per-survey completion guard (no attempt-counter inflation) and
+focus management on survey render. See tests in scoring/instruments/core test files.
+
 ## File Structure
 
 ```
@@ -44,7 +63,7 @@ webapp/
 as a browser global *and* as a Node `module.exports`. Test files are CommonJS
 (`tests/*.test.js`) and `require()` the source directly. There is **no
 `package.json`** in `webapp/` (so Node treats `.js` as CommonJS). Run all tests
-with `node --test webapp/tests/`.
+with `node --test webapp/tests/*.test.js`.
 
 The dual-export wrapper used by every source file:
 
@@ -816,13 +835,13 @@ Expected: FAIL — cannot find `hads.js`.
         options: [o("Not at all", 0), o("Occasionally", 1), o("Quite often", 2), o("Very often", 3)] },
       { id: "hads_10", subscale: "depression", type: "choice", text: "I have lost interest in my appearance:",
         options: [o("Definitely", 3), o("I don't take as much care as I should", 2), o("I may not take quite as much care", 1), o("I take just as much care as ever", 0)] },
-      { id: "hads_11", subscale: "anxiety", type: "choice", text: "I feel restless as if I have to be on the move:",
+      { id: "hads_11", subscale: "anxiety", type: "choice", text: "I feel restless as I have to be on the move:",
         options: [o("Very much indeed", 3), o("Quite a lot", 2), o("Not very much", 1), o("Not at all", 0)] },
       { id: "hads_12", subscale: "depression", type: "choice", text: "I look forward with enjoyment to things:",
         options: [o("As much as I ever did", 0), o("Rather less than I used to", 1), o("Definitely less than I used to", 2), o("Hardly at all", 3)] },
       { id: "hads_13", subscale: "anxiety", type: "choice", text: "I get sudden feelings of panic:",
         options: [o("Very often indeed", 3), o("Quite often", 2), o("Not very often", 1), o("Not at all", 0)] },
-      { id: "hads_14", subscale: "depression", type: "choice", text: "I can enjoy a good book or radio or TV programme:",
+      { id: "hads_14", subscale: "depression", type: "choice", text: "I can enjoy a good book or radio or TV program:",
         options: [o("Often", 0), o("Sometimes", 1), o("Not often", 2), o("Very seldom", 3)] },
     ],
     scoring: { rule: "hadsSubscales", subscales: { anxiety: { max: 21 }, depression: { max: 21 } } },
@@ -1278,7 +1297,7 @@ Expected: PASS (all core tests).
 
 - [ ] **Step 5: Run the whole suite + commit**
 
-Run: `node --test webapp/tests/`
+Run: `node --test webapp/tests/*.test.js`
 Expected: PASS (scoring + instruments + core).
 
 ```bash
@@ -1673,7 +1692,7 @@ Then add the bootstrap function:
 
 - [ ] **Step 3: Re-run the Node suite to confirm no regressions**
 
-Run: `node --test webapp/tests/`
+Run: `node --test webapp/tests/*.test.js`
 Expected: PASS — the controller is guarded by `typeof document !== "undefined"`,
 so Node still only exercises the pure API (`makeToken`, `nextAttempt`, `shuffle`,
 `scoreInstrument`, `buildResults`, `toCSVRow`).
@@ -1832,7 +1851,7 @@ vendoring step in the implementation plan) and update the version above.
 
 ## Tests
 
-    node --test webapp/tests/
+    node --test webapp/tests/*.test.js
 ```
 
 - [ ] **Step 6: Commit**
