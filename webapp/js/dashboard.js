@@ -70,8 +70,8 @@
     });
     if (data.every((d) => d.n < 2)) { emptyNote(sel, "Waiting for participants with two completed attempts…"); return; }
 
-    const m = { t: 28, r: 56, b: 40, l: 120 };
-    const rowH = 34, w = 700, h = m.t + m.b + data.length * rowH;
+    const m = { t: 28, r: 112, b: 40, l: 120 };
+    const rowH = 34, w = 760, h = m.t + m.b + data.length * rowH;
     const svg = freshSvg(sel, w, h);
     const x = d3.scaleLinear().domain([0, 1]).range([m.l, w - m.r]);
 
@@ -107,8 +107,8 @@
       .attr("stroke", (d) => BAND_COLOR[d.band]).attr("stroke-width", 2);
     ok.append("circle").attr("cx", (d) => x(Math.max(0, Math.min(1, d.icc)))).attr("r", 6)
       .attr("fill", (d) => BAND_COLOR[d.band]);
-    ok.append("text").attr("class", "icc-val").attr("x", w - m.r + 6).attr("dy", "0.32em")
-      .text((d) => `${fmt2(d.icc)}  (n=${d.n})`);
+    ok.append("text").attr("class", "icc-val").attr("x", w - 8).attr("dy", "0.32em")
+      .attr("text-anchor", "end").text((d) => `${fmt2(d.icc)}  (n=${d.n})`);
   }
 
   // ---------- scatter (generic) ----------

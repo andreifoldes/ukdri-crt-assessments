@@ -151,6 +151,8 @@ select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 /* ---------- footer ---------- */
 .foot { max-width: 1080px; margin: 1rem auto 3rem; padding: 0 1.5rem; }
 .foot p { font-size: 0.82rem; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 0.9rem; }
+.foot p.ref { border-top: 0; padding-top: 0; font-size: 0.78rem; max-width: 70ch; }
+.foot a { color: var(--accent); }
 
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
