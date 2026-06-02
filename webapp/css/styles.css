@@ -27,7 +27,7 @@ h1 { font-size: 1.6rem; }
 button.primary { font: inherit; font-weight: 600; background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 0.6rem 1.2rem; cursor: pointer; margin: 0.25rem 0.5rem 0.25rem 0; }
 button.primary:hover { background: var(--accent-dark); }
 .done { padding: 1rem 0; text-align: center; }
-.done > * { margin-left: auto; margin-right: auto; }
+.done button { display: inline-block; margin: 0.3rem; }   /* overrides the asymmetric default margin so text-align:center applies */
 .participant-id { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.18em; color: var(--accent); margin: 0.5rem 0; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
 #id-input { font: inherit; text-transform: uppercase; letter-spacing: 0.12em; width: 7rem; padding: 0.3rem 0.45rem; border: 1px solid #999; border-radius: 6px; margin: 0 0.4rem; }
 button.secondary { font: inherit; background: #fff; color: var(--accent); border: 1px solid var(--accent); border-radius: 8px; padding: 0.3rem 0.8rem; cursor: pointer; }
@@ -35,7 +35,8 @@ button.secondary:hover { background: var(--accent-tint); }
 .id-feedback { display: inline-block; margin-left: 0.4rem; color: var(--accent); }
 .retest { margin-top: 1.5rem; border-top: 1px solid #d0d0d0; padding-top: 1rem; }
 .retest h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-.retest table { border-collapse: collapse; width: 100%; max-width: 30rem; }
+.retest table { border-collapse: collapse; width: 100%; max-width: 30rem; margin: 0.5rem auto; }
 .retest th, .retest td { text-align: center; padding: 0.35rem 0.6rem; border-bottom: 1px solid #e0e0e0; }
 .retest td.delta { font-weight: 700; }   /* neutral: direction varies by scale (see note), so no good/bad colour */
+.retest abbr.tip { text-decoration: underline dotted; cursor: help; }
 [hidden] { display: none !important; }
