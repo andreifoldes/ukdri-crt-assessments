@@ -8,4 +8,8 @@ button.primary { font: inherit; font-weight: 600; background: var(--accent); col
 button.primary:hover { filter: brightness(1.07); }
 .done { padding: 1rem 0; }
 .participant-id { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.18em; color: var(--accent); margin: 0.5rem 0; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+#id-input { font: inherit; text-transform: uppercase; letter-spacing: 0.12em; width: 7rem; padding: 0.3rem 0.45rem; border: 1px solid #ccc; border-radius: 6px; margin: 0 0.4rem; }
+button.secondary { font: inherit; background: #fff; color: var(--accent); border: 1px solid var(--accent); border-radius: 8px; padding: 0.3rem 0.8rem; cursor: pointer; }
+button.secondary:hover { background: #f0f4fb; }
+.id-feedback { display: inline-block; margin-left: 0.4rem; color: var(--accent); }
 [hidden] { display: none !important; }

@@ -128,3 +128,15 @@ test("buildResults: duplicate-score options export the score + the CORRECT label
   assert.equal(row.label, "second", "label must be the chosen option, not the first value-match");
   assert.equal(out.instruments.lawtonish.scores.total, 1);
 });
+
+test("normalizeToken is case-insensitive and letters-only, 5-letter canonical", () => {
+  assert.equal(C.normalizeToken("hufir"), "HUFIR");
+  assert.equal(C.normalizeToken("  HuFiR "), "HUFIR");
+  assert.equal(C.normalizeToken("hu-fi r"), "HUFIR");   // strips non-letters then checks length
+  assert.equal(C.normalizeToken("BAKOR"), "BAKOR");
+  assert.equal(C.normalizeToken("abcd"), null);          // too short
+  assert.equal(C.normalizeToken("abcdef"), null);        // too long
+  assert.equal(C.normalizeToken("12345"), null);         // no letters
+  assert.equal(C.normalizeToken(""), null);
+  assert.equal(C.normalizeToken(null), null);
+});
