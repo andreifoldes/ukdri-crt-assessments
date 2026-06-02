@@ -303,12 +303,15 @@
     ).join("");
     const pearsonTip = "Pearson correlation across the " + cmp.n + " paired scale scores (this attempt vs the previous): +1 = identical pattern, 0 = no linear relationship, −1 = opposite. Illustrative only (n = " + cmp.n + " scales).";
     const spearmanTip = "Spearman rank correlation: like Pearson but based on the rank order of the " + cmp.n + " scale scores, so it is less affected by the scales having different ranges.";
+    const info = (text) =>
+      '<span class="info" tabindex="0" role="button" aria-label="More information">i' +
+      '<span class="tip-text">' + text + "</span></span>";
     const corr = (cmp.pearson === null)
       ? "<p class=\"muted small\">Not enough overlapping scales to compute a consistency figure.</p>"
       : "<p>Within-person consistency across the " + cmp.n +
         " scale scores (illustrative only — not a formal reliability coefficient): " +
-        '<abbr class="tip" title="' + pearsonTip + '">Pearson r</abbr> = ' + cmp.pearson.toFixed(2) +
-        (cmp.spearman === null ? "" : '; <abbr class="tip" title="' + spearmanTip + '">Spearman ρ</abbr> = ' + cmp.spearman.toFixed(2)) + ".</p>";
+        "Pearson r" + info(pearsonTip) + " = " + cmp.pearson.toFixed(2) +
+        (cmp.spearman === null ? "" : "; Spearman ρ" + info(spearmanTip) + " = " + cmp.spearman.toFixed(2)) + ".</p>";
     return '<div class="retest"><h3>How your scores compare with your previous attempt</h3>' +
       "<table><thead><tr><th>Scale</th><th>Attempt " + prevAttempt + "</th><th>Attempt " + currAttempt +
       "</th><th>Change</th></tr></thead><tbody>" + rows + "</tbody></table>" + corr +
