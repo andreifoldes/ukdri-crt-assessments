@@ -1,0 +1,2874 @@
+[
+  {
+    "participantToken": "BAKOR",
+    "attempt": 1,
+    "storagePersistent": true,
+    "timestamp": "2026-06-02T09:05:00.000Z",
+    "presentationOrder": [
+      "lawton",
+      "psqi",
+      "hads",
+      "phq9",
+      "ess"
+    ],
+    "instruments": {
+      "lawton": {
+        "responses": [
+          {
+            "itemId": "lawton_A",
+            "value": 1,
+            "label": "Operates telephone on own initiative — looks up and dials numbers, etc."
+          },
+          {
+            "itemId": "lawton_B",
+            "value": 0,
+            "label": "Needs to be accompanied on any shopping trip"
+          },
+          {
+            "itemId": "lawton_C",
+            "value": 0,
+            "label": "Heats, serves and prepares meals, or prepares meals but does not maintain adequate diet"
+          },
+          {
+            "itemId": "lawton_D",
+            "value": 1,
+            "label": "Performs light daily tasks but cannot maintain acceptable level of cleanliness"
+          },
+          {
+            "itemId": "lawton_E",
+            "value": 1,
+            "label": "Launders small items — rinses stockings, etc."
+          },
+          {
+            "itemId": "lawton_F",
+            "value": 1,
+            "label": "Arranges own travel via taxi, but does not otherwise use public transportation"
+          },
+          {
+            "itemId": "lawton_G",
+            "value": 1,
+            "label": "Is responsible for taking medication in correct dosages at correct time"
+          },
+          {
+            "itemId": "lawton_H",
+            "value": 1,
+            "label": "Manages financial matters independently (budgets, writes cheques, pays rent/bills, goes to bank), collects and keeps track of income"
+          }
+        ],
+        "scores": {
+          "total": 6
+        },
+        "bands": {
+          "total": null
+        }
+      },
+      "psqi": {
+        "responses": [
+          {
+            "itemId": "q1_bedtime",
+            "value": "23:15"
+          },
+          {
+            "itemId": "q2_latency_min",
+            "value": 23
+          },
+          {
+            "itemId": "q3_risetime",
+            "value": "07:00"
+          },
+          {
+            "itemId": "q4_hours_sleep",
+            "value": 8
+          },
+          {
+            "itemId": "q5a",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5b",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5c",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5d",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5e",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5f",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5g",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5h",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5i",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5j",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5j_text",
+            "value": ""
+          },
+          {
+            "itemId": "q6_quality",
+            "value": 3,
+            "label": "Very bad"
+          },
+          {
+            "itemId": "q7_medication",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q8_stayawake",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q9_enthusiasm",
+            "value": 2,
+            "label": "Somewhat of a problem"
+          }
+        ],
+        "scores": {
+          "c1": 3,
+          "c2": 1,
+          "c3": 0,
+          "c4": 0,
+          "c5": 2,
+          "c6": 0,
+          "c7": 3,
+          "global": 9
+        },
+        "bands": {
+          "global": "poor sleep"
+        }
+      },
+      "hads": {
+        "responses": [
+          {
+            "itemId": "hads_1",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_2",
+            "value": 0,
+            "label": "Definitely as much"
+          },
+          {
+            "itemId": "hads_3",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_4",
+            "value": 2,
+            "label": "Definitely not so much now"
+          },
+          {
+            "itemId": "hads_5",
+            "value": 1,
+            "label": "From time to time, but not too often"
+          },
+          {
+            "itemId": "hads_6",
+            "value": 2,
+            "label": "Not often"
+          },
+          {
+            "itemId": "hads_7",
+            "value": 1,
+            "label": "Usually"
+          },
+          {
+            "itemId": "hads_8",
+            "value": 3,
+            "label": "Nearly all the time"
+          },
+          {
+            "itemId": "hads_9",
+            "value": 3,
+            "label": "Very often"
+          },
+          {
+            "itemId": "hads_10",
+            "value": 0,
+            "label": "I take just as much care as ever"
+          },
+          {
+            "itemId": "hads_11",
+            "value": 1,
+            "label": "Not very much"
+          },
+          {
+            "itemId": "hads_12",
+            "value": 2,
+            "label": "Definitely less than I used to"
+          },
+          {
+            "itemId": "hads_13",
+            "value": 2,
+            "label": "Quite often"
+          },
+          {
+            "itemId": "hads_14",
+            "value": 0,
+            "label": "Often"
+          }
+        ],
+        "scores": {
+          "anxiety": 8,
+          "depression": 9
+        },
+        "bands": {
+          "anxiety": "borderline",
+          "depression": "borderline"
+        }
+      },
+      "phq9": {
+        "responses": [
+          {
+            "itemId": "phq9_1",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_2",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "phq9_3",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_4",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "phq9_5",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_6",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_7",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "phq9_8",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_9",
+            "value": 0,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 12
+        },
+        "bands": {
+          "total": "moderate"
+        }
+      },
+      "ess": {
+        "responses": [
+          {
+            "itemId": "ess_1",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_2",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_3",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_4",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_5",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_6",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "ess_7",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_8",
+            "value": 2,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 12
+        },
+        "bands": {
+          "total": "borderline"
+        }
+      }
+    }
+  },
+  {
+    "participantToken": "BAKOR",
+    "attempt": 2,
+    "storagePersistent": true,
+    "timestamp": "2026-06-02T09:25:00.000Z",
+    "presentationOrder": [
+      "psqi",
+      "lawton",
+      "hads",
+      "phq9",
+      "ess"
+    ],
+    "instruments": {
+      "psqi": {
+        "responses": [
+          {
+            "itemId": "q1_bedtime",
+            "value": "23:15"
+          },
+          {
+            "itemId": "q2_latency_min",
+            "value": 23
+          },
+          {
+            "itemId": "q3_risetime",
+            "value": "07:00"
+          },
+          {
+            "itemId": "q4_hours_sleep",
+            "value": 8
+          },
+          {
+            "itemId": "q5a",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5b",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5c",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5d",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5e",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5f",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5g",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5h",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5i",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5j",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5j_text",
+            "value": ""
+          },
+          {
+            "itemId": "q6_quality",
+            "value": 3,
+            "label": "Very bad"
+          },
+          {
+            "itemId": "q7_medication",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q8_stayawake",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q9_enthusiasm",
+            "value": 2,
+            "label": "Somewhat of a problem"
+          }
+        ],
+        "scores": {
+          "c1": 3,
+          "c2": 1,
+          "c3": 0,
+          "c4": 0,
+          "c5": 2,
+          "c6": 0,
+          "c7": 3,
+          "global": 9
+        },
+        "bands": {
+          "global": "poor sleep"
+        }
+      },
+      "lawton": {
+        "responses": [
+          {
+            "itemId": "lawton_A",
+            "value": 1,
+            "label": "Operates telephone on own initiative — looks up and dials numbers, etc."
+          },
+          {
+            "itemId": "lawton_B",
+            "value": 0,
+            "label": "Completely unable to shop"
+          },
+          {
+            "itemId": "lawton_C",
+            "value": 0,
+            "label": "Needs to have meals prepared and served"
+          },
+          {
+            "itemId": "lawton_D",
+            "value": 1,
+            "label": "Performs light daily tasks but cannot maintain acceptable level of cleanliness"
+          },
+          {
+            "itemId": "lawton_E",
+            "value": 1,
+            "label": "Launders small items — rinses stockings, etc."
+          },
+          {
+            "itemId": "lawton_F",
+            "value": 1,
+            "label": "Arranges own travel via taxi, but does not otherwise use public transportation"
+          },
+          {
+            "itemId": "lawton_G",
+            "value": 1,
+            "label": "Is responsible for taking medication in correct dosages at correct time"
+          },
+          {
+            "itemId": "lawton_H",
+            "value": 1,
+            "label": "Manages financial matters independently (budgets, writes cheques, pays rent/bills, goes to bank), collects and keeps track of income"
+          }
+        ],
+        "scores": {
+          "total": 6
+        },
+        "bands": {
+          "total": null
+        }
+      },
+      "hads": {
+        "responses": [
+          {
+            "itemId": "hads_1",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_2",
+            "value": 3,
+            "label": "Hardly at all"
+          },
+          {
+            "itemId": "hads_3",
+            "value": 3,
+            "label": "Very definitely and quite badly"
+          },
+          {
+            "itemId": "hads_4",
+            "value": 2,
+            "label": "Definitely not so much now"
+          },
+          {
+            "itemId": "hads_5",
+            "value": 1,
+            "label": "From time to time, but not too often"
+          },
+          {
+            "itemId": "hads_6",
+            "value": 2,
+            "label": "Not often"
+          },
+          {
+            "itemId": "hads_7",
+            "value": 1,
+            "label": "Usually"
+          },
+          {
+            "itemId": "hads_8",
+            "value": 3,
+            "label": "Nearly all the time"
+          },
+          {
+            "itemId": "hads_9",
+            "value": 3,
+            "label": "Very often"
+          },
+          {
+            "itemId": "hads_10",
+            "value": 1,
+            "label": "I may not take quite as much care"
+          },
+          {
+            "itemId": "hads_11",
+            "value": 1,
+            "label": "Not very much"
+          },
+          {
+            "itemId": "hads_12",
+            "value": 2,
+            "label": "Definitely less than I used to"
+          },
+          {
+            "itemId": "hads_13",
+            "value": 2,
+            "label": "Quite often"
+          },
+          {
+            "itemId": "hads_14",
+            "value": 0,
+            "label": "Often"
+          }
+        ],
+        "scores": {
+          "anxiety": 11,
+          "depression": 13
+        },
+        "bands": {
+          "anxiety": "case",
+          "depression": "case"
+        }
+      },
+      "phq9": {
+        "responses": [
+          {
+            "itemId": "phq9_1",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_2",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_3",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "phq9_4",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "phq9_5",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_6",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_7",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "phq9_8",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_9",
+            "value": 0,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 12
+        },
+        "bands": {
+          "total": "moderate"
+        }
+      },
+      "ess": {
+        "responses": [
+          {
+            "itemId": "ess_1",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_2",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_3",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_4",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "ess_5",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_6",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "ess_7",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_8",
+            "value": 2,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 11
+        },
+        "bands": {
+          "total": "borderline"
+        }
+      }
+    }
+  },
+  {
+    "participantToken": "DOMIR",
+    "attempt": 1,
+    "storagePersistent": true,
+    "timestamp": "2026-06-02T09:06:00.000Z",
+    "presentationOrder": [
+      "phq9",
+      "lawton",
+      "hads",
+      "ess",
+      "psqi"
+    ],
+    "instruments": {
+      "phq9": {
+        "responses": [
+          {
+            "itemId": "phq9_1",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "phq9_2",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_3",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_4",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_5",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_6",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_7",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_8",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_9",
+            "value": 2,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 17
+        },
+        "bands": {
+          "total": "moderately severe"
+        }
+      },
+      "lawton": {
+        "responses": [
+          {
+            "itemId": "lawton_A",
+            "value": 1,
+            "label": "Dials a few well-known numbers"
+          },
+          {
+            "itemId": "lawton_B",
+            "value": 0,
+            "label": "Needs to be accompanied on any shopping trip"
+          },
+          {
+            "itemId": "lawton_C",
+            "value": 0,
+            "label": "Heats, serves and prepares meals, or prepares meals but does not maintain adequate diet"
+          },
+          {
+            "itemId": "lawton_D",
+            "value": 1,
+            "label": "Maintains house alone or with occasional assistance (e.g. heavy-work domestic help)"
+          },
+          {
+            "itemId": "lawton_E",
+            "value": 1,
+            "label": "Does personal laundry completely"
+          },
+          {
+            "itemId": "lawton_F",
+            "value": 0,
+            "label": "Does not travel at all"
+          },
+          {
+            "itemId": "lawton_G",
+            "value": 1,
+            "label": "Is responsible for taking medication in correct dosages at correct time"
+          },
+          {
+            "itemId": "lawton_H",
+            "value": 0,
+            "label": "Incapable of handling money"
+          }
+        ],
+        "scores": {
+          "total": 4
+        },
+        "bands": {
+          "total": null
+        }
+      },
+      "hads": {
+        "responses": [
+          {
+            "itemId": "hads_1",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_2",
+            "value": 2,
+            "label": "Only a little"
+          },
+          {
+            "itemId": "hads_3",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_4",
+            "value": 0,
+            "label": "As much as I always could"
+          },
+          {
+            "itemId": "hads_5",
+            "value": 3,
+            "label": "A great deal of the time"
+          },
+          {
+            "itemId": "hads_6",
+            "value": 2,
+            "label": "Not often"
+          },
+          {
+            "itemId": "hads_7",
+            "value": 0,
+            "label": "Definitely"
+          },
+          {
+            "itemId": "hads_8",
+            "value": 2,
+            "label": "Very often"
+          },
+          {
+            "itemId": "hads_9",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_10",
+            "value": 3,
+            "label": "Definitely"
+          },
+          {
+            "itemId": "hads_11",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_12",
+            "value": 2,
+            "label": "Definitely less than I used to"
+          },
+          {
+            "itemId": "hads_13",
+            "value": 3,
+            "label": "Very often indeed"
+          },
+          {
+            "itemId": "hads_14",
+            "value": 0,
+            "label": "Often"
+          }
+        ],
+        "scores": {
+          "anxiety": 6,
+          "depression": 11
+        },
+        "bands": {
+          "anxiety": "normal",
+          "depression": "case"
+        }
+      },
+      "ess": {
+        "responses": [
+          {
+            "itemId": "ess_1",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_2",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_3",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "ess_4",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_5",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_6",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "ess_7",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_8",
+            "value": 3,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 16
+        },
+        "bands": {
+          "total": "abnormal"
+        }
+      },
+      "psqi": {
+        "responses": [
+          {
+            "itemId": "q1_bedtime",
+            "value": "23:45"
+          },
+          {
+            "itemId": "q2_latency_min",
+            "value": 39
+          },
+          {
+            "itemId": "q3_risetime",
+            "value": "07:45"
+          },
+          {
+            "itemId": "q4_hours_sleep",
+            "value": 6
+          },
+          {
+            "itemId": "q5a",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5b",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5c",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5d",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5e",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5f",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5g",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5h",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5i",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5j",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5j_text",
+            "value": ""
+          },
+          {
+            "itemId": "q6_quality",
+            "value": 0,
+            "label": "Very good"
+          },
+          {
+            "itemId": "q7_medication",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q8_stayawake",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q9_enthusiasm",
+            "value": 2,
+            "label": "Somewhat of a problem"
+          }
+        ],
+        "scores": {
+          "c1": 0,
+          "c2": 1,
+          "c3": 2,
+          "c4": 1,
+          "c5": 2,
+          "c6": 2,
+          "c7": 3,
+          "global": 11
+        },
+        "bands": {
+          "global": "poor sleep"
+        }
+      }
+    }
+  },
+  {
+    "participantToken": "DOMIR",
+    "attempt": 2,
+    "storagePersistent": true,
+    "timestamp": "2026-06-02T09:26:00.000Z",
+    "presentationOrder": [
+      "ess",
+      "hads",
+      "psqi",
+      "lawton",
+      "phq9"
+    ],
+    "instruments": {
+      "ess": {
+        "responses": [
+          {
+            "itemId": "ess_1",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_2",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_3",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_4",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_5",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_6",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "ess_7",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_8",
+            "value": 3,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 12
+        },
+        "bands": {
+          "total": "borderline"
+        }
+      },
+      "hads": {
+        "responses": [
+          {
+            "itemId": "hads_1",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_2",
+            "value": 2,
+            "label": "Only a little"
+          },
+          {
+            "itemId": "hads_3",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_4",
+            "value": 0,
+            "label": "As much as I always could"
+          },
+          {
+            "itemId": "hads_5",
+            "value": 3,
+            "label": "A great deal of the time"
+          },
+          {
+            "itemId": "hads_6",
+            "value": 2,
+            "label": "Not often"
+          },
+          {
+            "itemId": "hads_7",
+            "value": 0,
+            "label": "Definitely"
+          },
+          {
+            "itemId": "hads_8",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_9",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_10",
+            "value": 3,
+            "label": "Definitely"
+          },
+          {
+            "itemId": "hads_11",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_12",
+            "value": 2,
+            "label": "Definitely less than I used to"
+          },
+          {
+            "itemId": "hads_13",
+            "value": 3,
+            "label": "Very often indeed"
+          },
+          {
+            "itemId": "hads_14",
+            "value": 0,
+            "label": "Often"
+          }
+        ],
+        "scores": {
+          "anxiety": 6,
+          "depression": 9
+        },
+        "bands": {
+          "anxiety": "normal",
+          "depression": "borderline"
+        }
+      },
+      "psqi": {
+        "responses": [
+          {
+            "itemId": "q1_bedtime",
+            "value": "23:45"
+          },
+          {
+            "itemId": "q2_latency_min",
+            "value": 39
+          },
+          {
+            "itemId": "q3_risetime",
+            "value": "07:45"
+          },
+          {
+            "itemId": "q4_hours_sleep",
+            "value": 5
+          },
+          {
+            "itemId": "q5a",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5b",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5c",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5d",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5e",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5f",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5g",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5h",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5i",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5j",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5j_text",
+            "value": ""
+          },
+          {
+            "itemId": "q6_quality",
+            "value": 0,
+            "label": "Very good"
+          },
+          {
+            "itemId": "q7_medication",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q8_stayawake",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q9_enthusiasm",
+            "value": 2,
+            "label": "Somewhat of a problem"
+          }
+        ],
+        "scores": {
+          "c1": 0,
+          "c2": 1,
+          "c3": 3,
+          "c4": 3,
+          "c5": 2,
+          "c6": 2,
+          "c7": 3,
+          "global": 14
+        },
+        "bands": {
+          "global": "poor sleep"
+        }
+      },
+      "lawton": {
+        "responses": [
+          {
+            "itemId": "lawton_A",
+            "value": 1,
+            "label": "Dials a few well-known numbers"
+          },
+          {
+            "itemId": "lawton_B",
+            "value": 0,
+            "label": "Needs to be accompanied on any shopping trip"
+          },
+          {
+            "itemId": "lawton_C",
+            "value": 1,
+            "label": "Plans, prepares and serves adequate meals independently"
+          },
+          {
+            "itemId": "lawton_D",
+            "value": 1,
+            "label": "Maintains house alone or with occasional assistance (e.g. heavy-work domestic help)"
+          },
+          {
+            "itemId": "lawton_E",
+            "value": 1,
+            "label": "Does personal laundry completely"
+          },
+          {
+            "itemId": "lawton_F",
+            "value": 0,
+            "label": "Does not travel at all"
+          },
+          {
+            "itemId": "lawton_G",
+            "value": 1,
+            "label": "Is responsible for taking medication in correct dosages at correct time"
+          },
+          {
+            "itemId": "lawton_H",
+            "value": 0,
+            "label": "Incapable of handling money"
+          }
+        ],
+        "scores": {
+          "total": 5
+        },
+        "bands": {
+          "total": null
+        }
+      },
+      "phq9": {
+        "responses": [
+          {
+            "itemId": "phq9_1",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_2",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_3",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_4",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_5",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_6",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_7",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_8",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_9",
+            "value": 2,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 19
+        },
+        "bands": {
+          "total": "moderately severe"
+        }
+      }
+    }
+  },
+  {
+    "participantToken": "FELUS",
+    "attempt": 1,
+    "storagePersistent": true,
+    "timestamp": "2026-06-02T09:07:00.000Z",
+    "presentationOrder": [
+      "phq9",
+      "psqi",
+      "ess",
+      "lawton",
+      "hads"
+    ],
+    "instruments": {
+      "phq9": {
+        "responses": [
+          {
+            "itemId": "phq9_1",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_2",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_3",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "phq9_4",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "phq9_5",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_6",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_7",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_8",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_9",
+            "value": 3,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 16
+        },
+        "bands": {
+          "total": "moderately severe"
+        }
+      },
+      "psqi": {
+        "responses": [
+          {
+            "itemId": "q1_bedtime",
+            "value": "23:00"
+          },
+          {
+            "itemId": "q2_latency_min",
+            "value": 40
+          },
+          {
+            "itemId": "q3_risetime",
+            "value": "07:00"
+          },
+          {
+            "itemId": "q4_hours_sleep",
+            "value": 7
+          },
+          {
+            "itemId": "q5a",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5b",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5c",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5d",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5e",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5f",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5g",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5h",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5i",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5j",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5j_text",
+            "value": ""
+          },
+          {
+            "itemId": "q6_quality",
+            "value": 0,
+            "label": "Very good"
+          },
+          {
+            "itemId": "q7_medication",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q8_stayawake",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q9_enthusiasm",
+            "value": 3,
+            "label": "A very big problem"
+          }
+        ],
+        "scores": {
+          "c1": 0,
+          "c2": 2,
+          "c3": 1,
+          "c4": 0,
+          "c5": 2,
+          "c6": 1,
+          "c7": 3,
+          "global": 9
+        },
+        "bands": {
+          "global": "poor sleep"
+        }
+      },
+      "ess": {
+        "responses": [
+          {
+            "itemId": "ess_1",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_2",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_3",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_4",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_5",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_6",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_7",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_8",
+            "value": 1,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 9
+        },
+        "bands": {
+          "total": "normal"
+        }
+      },
+      "lawton": {
+        "responses": [
+          {
+            "itemId": "lawton_A",
+            "value": 0,
+            "label": "Does not use telephone at all"
+          },
+          {
+            "itemId": "lawton_B",
+            "value": 1,
+            "label": "Takes care of all shopping needs independently"
+          },
+          {
+            "itemId": "lawton_C",
+            "value": 0,
+            "label": "Needs to have meals prepared and served"
+          },
+          {
+            "itemId": "lawton_D",
+            "value": 1,
+            "label": "Needs help with all home maintenance tasks"
+          },
+          {
+            "itemId": "lawton_E",
+            "value": 1,
+            "label": "Launders small items — rinses stockings, etc."
+          },
+          {
+            "itemId": "lawton_F",
+            "value": 1,
+            "label": "Travels independently on public transportation or drives own car"
+          },
+          {
+            "itemId": "lawton_G",
+            "value": 1,
+            "label": "Is responsible for taking medication in correct dosages at correct time"
+          },
+          {
+            "itemId": "lawton_H",
+            "value": 1,
+            "label": "Manages financial matters independently (budgets, writes cheques, pays rent/bills, goes to bank), collects and keeps track of income"
+          }
+        ],
+        "scores": {
+          "total": 6
+        },
+        "bands": {
+          "total": null
+        }
+      },
+      "hads": {
+        "responses": [
+          {
+            "itemId": "hads_1",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_2",
+            "value": 1,
+            "label": "Not quite so much"
+          },
+          {
+            "itemId": "hads_3",
+            "value": 3,
+            "label": "Very definitely and quite badly"
+          },
+          {
+            "itemId": "hads_4",
+            "value": 0,
+            "label": "As much as I always could"
+          },
+          {
+            "itemId": "hads_5",
+            "value": 1,
+            "label": "From time to time, but not too often"
+          },
+          {
+            "itemId": "hads_6",
+            "value": 0,
+            "label": "Most of the time"
+          },
+          {
+            "itemId": "hads_7",
+            "value": 2,
+            "label": "Not often"
+          },
+          {
+            "itemId": "hads_8",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_9",
+            "value": 2,
+            "label": "Quite often"
+          },
+          {
+            "itemId": "hads_10",
+            "value": 0,
+            "label": "I take just as much care as ever"
+          },
+          {
+            "itemId": "hads_11",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_12",
+            "value": 1,
+            "label": "Rather less than I used to"
+          },
+          {
+            "itemId": "hads_13",
+            "value": 1,
+            "label": "Not very often"
+          },
+          {
+            "itemId": "hads_14",
+            "value": 3,
+            "label": "Very seldom"
+          }
+        ],
+        "scores": {
+          "anxiety": 9,
+          "depression": 5
+        },
+        "bands": {
+          "anxiety": "borderline",
+          "depression": "normal"
+        }
+      }
+    }
+  },
+  {
+    "participantToken": "FELUS",
+    "attempt": 2,
+    "storagePersistent": true,
+    "timestamp": "2026-06-02T09:27:00.000Z",
+    "presentationOrder": [
+      "phq9",
+      "hads",
+      "ess",
+      "lawton",
+      "psqi"
+    ],
+    "instruments": {
+      "phq9": {
+        "responses": [
+          {
+            "itemId": "phq9_1",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_2",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_3",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_4",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "phq9_5",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_6",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_7",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_8",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_9",
+            "value": 3,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 17
+        },
+        "bands": {
+          "total": "moderately severe"
+        }
+      },
+      "hads": {
+        "responses": [
+          {
+            "itemId": "hads_1",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_2",
+            "value": 1,
+            "label": "Not quite so much"
+          },
+          {
+            "itemId": "hads_3",
+            "value": 1,
+            "label": "A little, but it doesn't worry me"
+          },
+          {
+            "itemId": "hads_4",
+            "value": 0,
+            "label": "As much as I always could"
+          },
+          {
+            "itemId": "hads_5",
+            "value": 1,
+            "label": "From time to time, but not too often"
+          },
+          {
+            "itemId": "hads_6",
+            "value": 2,
+            "label": "Not often"
+          },
+          {
+            "itemId": "hads_7",
+            "value": 2,
+            "label": "Not often"
+          },
+          {
+            "itemId": "hads_8",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_9",
+            "value": 2,
+            "label": "Quite often"
+          },
+          {
+            "itemId": "hads_10",
+            "value": 0,
+            "label": "I take just as much care as ever"
+          },
+          {
+            "itemId": "hads_11",
+            "value": 0,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_12",
+            "value": 1,
+            "label": "Rather less than I used to"
+          },
+          {
+            "itemId": "hads_13",
+            "value": 3,
+            "label": "Very often indeed"
+          },
+          {
+            "itemId": "hads_14",
+            "value": 3,
+            "label": "Very seldom"
+          }
+        ],
+        "scores": {
+          "anxiety": 9,
+          "depression": 7
+        },
+        "bands": {
+          "anxiety": "borderline",
+          "depression": "normal"
+        }
+      },
+      "ess": {
+        "responses": [
+          {
+            "itemId": "ess_1",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_2",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_3",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_4",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_5",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_6",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_7",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_8",
+            "value": 0,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 10
+        },
+        "bands": {
+          "total": "normal"
+        }
+      },
+      "lawton": {
+        "responses": [
+          {
+            "itemId": "lawton_A",
+            "value": 0,
+            "label": "Does not use telephone at all"
+          },
+          {
+            "itemId": "lawton_B",
+            "value": 1,
+            "label": "Takes care of all shopping needs independently"
+          },
+          {
+            "itemId": "lawton_C",
+            "value": 0,
+            "label": "Needs to have meals prepared and served"
+          },
+          {
+            "itemId": "lawton_D",
+            "value": 1,
+            "label": "Needs help with all home maintenance tasks"
+          },
+          {
+            "itemId": "lawton_E",
+            "value": 1,
+            "label": "Launders small items — rinses stockings, etc."
+          },
+          {
+            "itemId": "lawton_F",
+            "value": 1,
+            "label": "Travels independently on public transportation or drives own car"
+          },
+          {
+            "itemId": "lawton_G",
+            "value": 1,
+            "label": "Is responsible for taking medication in correct dosages at correct time"
+          },
+          {
+            "itemId": "lawton_H",
+            "value": 1,
+            "label": "Manages financial matters independently (budgets, writes cheques, pays rent/bills, goes to bank), collects and keeps track of income"
+          }
+        ],
+        "scores": {
+          "total": 6
+        },
+        "bands": {
+          "total": null
+        }
+      },
+      "psqi": {
+        "responses": [
+          {
+            "itemId": "q1_bedtime",
+            "value": "23:00"
+          },
+          {
+            "itemId": "q2_latency_min",
+            "value": 28
+          },
+          {
+            "itemId": "q3_risetime",
+            "value": "07:00"
+          },
+          {
+            "itemId": "q4_hours_sleep",
+            "value": 7
+          },
+          {
+            "itemId": "q5a",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5b",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5c",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5d",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5e",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5f",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5g",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5h",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5i",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5j",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5j_text",
+            "value": ""
+          },
+          {
+            "itemId": "q6_quality",
+            "value": 2,
+            "label": "Fairly bad"
+          },
+          {
+            "itemId": "q7_medication",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q8_stayawake",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q9_enthusiasm",
+            "value": 3,
+            "label": "A very big problem"
+          }
+        ],
+        "scores": {
+          "c1": 2,
+          "c2": 1,
+          "c3": 1,
+          "c4": 0,
+          "c5": 2,
+          "c6": 3,
+          "c7": 3,
+          "global": 12
+        },
+        "bands": {
+          "global": "poor sleep"
+        }
+      }
+    }
+  },
+  {
+    "participantToken": "GINOT",
+    "attempt": 1,
+    "storagePersistent": true,
+    "timestamp": "2026-06-02T09:08:00.000Z",
+    "presentationOrder": [
+      "ess",
+      "lawton",
+      "psqi",
+      "hads",
+      "phq9"
+    ],
+    "instruments": {
+      "ess": {
+        "responses": [
+          {
+            "itemId": "ess_1",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_2",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_3",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_4",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_5",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_6",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_7",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_8",
+            "value": 0,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 12
+        },
+        "bands": {
+          "total": "borderline"
+        }
+      },
+      "lawton": {
+        "responses": [
+          {
+            "itemId": "lawton_A",
+            "value": 1,
+            "label": "Operates telephone on own initiative — looks up and dials numbers, etc."
+          },
+          {
+            "itemId": "lawton_B",
+            "value": 1,
+            "label": "Takes care of all shopping needs independently"
+          },
+          {
+            "itemId": "lawton_C",
+            "value": 0,
+            "label": "Heats, serves and prepares meals, or prepares meals but does not maintain adequate diet"
+          },
+          {
+            "itemId": "lawton_D",
+            "value": 1,
+            "label": "Performs light daily tasks but cannot maintain acceptable level of cleanliness"
+          },
+          {
+            "itemId": "lawton_E",
+            "value": 0,
+            "label": "All laundry must be done by others"
+          },
+          {
+            "itemId": "lawton_F",
+            "value": 0,
+            "label": "Travel limited to taxi or automobile with assistance of another"
+          },
+          {
+            "itemId": "lawton_G",
+            "value": 0,
+            "label": "Takes responsibility if medication is prepared in advance in separate dosages"
+          },
+          {
+            "itemId": "lawton_H",
+            "value": 1,
+            "label": "Manages financial matters independently (budgets, writes cheques, pays rent/bills, goes to bank), collects and keeps track of income"
+          }
+        ],
+        "scores": {
+          "total": 4
+        },
+        "bands": {
+          "total": null
+        }
+      },
+      "psqi": {
+        "responses": [
+          {
+            "itemId": "q1_bedtime",
+            "value": "00:15"
+          },
+          {
+            "itemId": "q2_latency_min",
+            "value": 44
+          },
+          {
+            "itemId": "q3_risetime",
+            "value": "09:45"
+          },
+          {
+            "itemId": "q4_hours_sleep",
+            "value": 5
+          },
+          {
+            "itemId": "q5a",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5b",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5c",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5d",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5e",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5f",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5g",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5h",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5i",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5j",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5j_text",
+            "value": ""
+          },
+          {
+            "itemId": "q6_quality",
+            "value": 3,
+            "label": "Very bad"
+          },
+          {
+            "itemId": "q7_medication",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q8_stayawake",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q9_enthusiasm",
+            "value": 2,
+            "label": "Somewhat of a problem"
+          }
+        ],
+        "scores": {
+          "c1": 3,
+          "c2": 1,
+          "c3": 3,
+          "c4": 3,
+          "c5": 2,
+          "c6": 3,
+          "c7": 2,
+          "global": 17
+        },
+        "bands": {
+          "global": "poor sleep"
+        }
+      },
+      "hads": {
+        "responses": [
+          {
+            "itemId": "hads_1",
+            "value": 3,
+            "label": "Most of the time"
+          },
+          {
+            "itemId": "hads_2",
+            "value": 0,
+            "label": "Definitely as much"
+          },
+          {
+            "itemId": "hads_3",
+            "value": 2,
+            "label": "Yes, but not too badly"
+          },
+          {
+            "itemId": "hads_4",
+            "value": 3,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_5",
+            "value": 1,
+            "label": "From time to time, but not too often"
+          },
+          {
+            "itemId": "hads_6",
+            "value": 2,
+            "label": "Not often"
+          },
+          {
+            "itemId": "hads_7",
+            "value": 0,
+            "label": "Definitely"
+          },
+          {
+            "itemId": "hads_8",
+            "value": 3,
+            "label": "Nearly all the time"
+          },
+          {
+            "itemId": "hads_9",
+            "value": 1,
+            "label": "Occasionally"
+          },
+          {
+            "itemId": "hads_10",
+            "value": 1,
+            "label": "I may not take quite as much care"
+          },
+          {
+            "itemId": "hads_11",
+            "value": 2,
+            "label": "Quite a lot"
+          },
+          {
+            "itemId": "hads_12",
+            "value": 1,
+            "label": "Rather less than I used to"
+          },
+          {
+            "itemId": "hads_13",
+            "value": 2,
+            "label": "Quite often"
+          },
+          {
+            "itemId": "hads_14",
+            "value": 1,
+            "label": "Sometimes"
+          }
+        ],
+        "scores": {
+          "anxiety": 11,
+          "depression": 11
+        },
+        "bands": {
+          "anxiety": "case",
+          "depression": "case"
+        }
+      },
+      "phq9": {
+        "responses": [
+          {
+            "itemId": "phq9_1",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_2",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_3",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_4",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_5",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_6",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_7",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_8",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_9",
+            "value": 3,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 18
+        },
+        "bands": {
+          "total": "moderately severe"
+        }
+      }
+    }
+  },
+  {
+    "participantToken": "GINOT",
+    "attempt": 2,
+    "storagePersistent": true,
+    "timestamp": "2026-06-02T09:28:00.000Z",
+    "presentationOrder": [
+      "phq9",
+      "lawton",
+      "ess",
+      "psqi",
+      "hads"
+    ],
+    "instruments": {
+      "phq9": {
+        "responses": [
+          {
+            "itemId": "phq9_1",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_2",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_3",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_4",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_5",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "phq9_6",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "phq9_7",
+            "value": 2,
+            "label": null
+          },
+          {
+            "itemId": "phq9_8",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "phq9_9",
+            "value": 3,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 17
+        },
+        "bands": {
+          "total": "moderately severe"
+        }
+      },
+      "lawton": {
+        "responses": [
+          {
+            "itemId": "lawton_A",
+            "value": 1,
+            "label": "Operates telephone on own initiative — looks up and dials numbers, etc."
+          },
+          {
+            "itemId": "lawton_B",
+            "value": 1,
+            "label": "Takes care of all shopping needs independently"
+          },
+          {
+            "itemId": "lawton_C",
+            "value": 0,
+            "label": "Prepares adequate meals if supplied with ingredients"
+          },
+          {
+            "itemId": "lawton_D",
+            "value": 1,
+            "label": "Needs help with all home maintenance tasks"
+          },
+          {
+            "itemId": "lawton_E",
+            "value": 0,
+            "label": "All laundry must be done by others"
+          },
+          {
+            "itemId": "lawton_F",
+            "value": 0,
+            "label": "Travel limited to taxi or automobile with assistance of another"
+          },
+          {
+            "itemId": "lawton_G",
+            "value": 1,
+            "label": "Is responsible for taking medication in correct dosages at correct time"
+          },
+          {
+            "itemId": "lawton_H",
+            "value": 1,
+            "label": "Manages financial matters independently (budgets, writes cheques, pays rent/bills, goes to bank), collects and keeps track of income"
+          }
+        ],
+        "scores": {
+          "total": 5
+        },
+        "bands": {
+          "total": null
+        }
+      },
+      "ess": {
+        "responses": [
+          {
+            "itemId": "ess_1",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_2",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_3",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_4",
+            "value": 1,
+            "label": null
+          },
+          {
+            "itemId": "ess_5",
+            "value": 3,
+            "label": null
+          },
+          {
+            "itemId": "ess_6",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_7",
+            "value": 0,
+            "label": null
+          },
+          {
+            "itemId": "ess_8",
+            "value": 0,
+            "label": null
+          }
+        ],
+        "scores": {
+          "total": 11
+        },
+        "bands": {
+          "total": "borderline"
+        }
+      },
+      "psqi": {
+        "responses": [
+          {
+            "itemId": "q1_bedtime",
+            "value": "00:15"
+          },
+          {
+            "itemId": "q2_latency_min",
+            "value": 44
+          },
+          {
+            "itemId": "q3_risetime",
+            "value": "09:45"
+          },
+          {
+            "itemId": "q4_hours_sleep",
+            "value": 5
+          },
+          {
+            "itemId": "q5a",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5b",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5c",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5d",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5e",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5f",
+            "value": 0,
+            "label": "Not during the past month"
+          },
+          {
+            "itemId": "q5g",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5h",
+            "value": 2,
+            "label": "Once or twice a week"
+          },
+          {
+            "itemId": "q5i",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q5j",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q5j_text",
+            "value": ""
+          },
+          {
+            "itemId": "q6_quality",
+            "value": 1,
+            "label": "Fairly good"
+          },
+          {
+            "itemId": "q7_medication",
+            "value": 3,
+            "label": "Three or more times a week"
+          },
+          {
+            "itemId": "q8_stayawake",
+            "value": 1,
+            "label": "Less than once a week"
+          },
+          {
+            "itemId": "q9_enthusiasm",
+            "value": 2,
+            "label": "Somewhat of a problem"
+          }
+        ],
+        "scores": {
+          "c1": 1,
+          "c2": 1,
+          "c3": 3,
+          "c4": 3,
+          "c5": 2,
+          "c6": 3,
+          "c7": 2,
+          "global": 15
+        },
+        "bands": {
+          "global": "poor sleep"
+        }
+      },
+      "hads": {
+        "responses": [
+          {
+            "itemId": "hads_1",
+            "value": 3,
+            "label": "Most of the time"
+          },
+          {
+            "itemId": "hads_2",
+            "value": 0,
+            "label": "Definitely as much"
+          },
+          {
+            "itemId": "hads_3",
+            "value": 3,
+            "label": "Very definitely and quite badly"
+          },
+          {
+            "itemId": "hads_4",
+            "value": 3,
+            "label": "Not at all"
+          },
+          {
+            "itemId": "hads_5",
+            "value": 1,
+            "label": "From time to time, but not too often"
+          },
+          {
+            "itemId": "hads_6",
+            "value": 2,
+            "label": "Not often"
+          },
+          {
+            "itemId": "hads_7",
+            "value": 0,
+            "label": "Definitely"
+          },
+          {
+            "itemId": "hads_8",
+            "value": 3,
+            "label": "Nearly all the time"
+          },
+          {
+            "itemId": "hads_9",
+            "value": 1,
+            "label": "Occasionally"
+          },
+          {
+            "itemId": "hads_10",
+            "value": 1,
+            "label": "I may not take quite as much care"
+          },
+          {
+            "itemId": "hads_11",
+            "value": 2,
+            "label": "Quite a lot"
+          },
+          {
+            "itemId": "hads_12",
+            "value": 1,
+            "label": "Rather less than I used to"
+          },
+          {
+            "itemId": "hads_13",
+            "value": 2,
+            "label": "Quite often"
+          },
+          {
+            "itemId": "hads_14",
+            "value": 1,
+            "label": "Sometimes"
+          }
+        ],
+        "scores": {
+          "anxiety": 12,
+          "depression": 11
+        },
+        "bands": {
+          "anxiety": "case",
+          "depression": "case"
+        }
+      }
+    }
+  }
+]
