@@ -19,7 +19,20 @@
         <span id="copy-feedback" class="id-feedback"></span>
       </p>
       <p id="attempt-note" class="muted"></p>
-      <p class="muted small">Please make a note of your ID. On your second attempt it should show the <strong>same</strong> ID — if it does, simply continue. If it shows a <strong>different</strong> ID, enter the ID from your first attempt below.</p>
+      <p class="muted small">Please make a note of your ID.</p>
+      <div class="decision">
+        <p class="d-q">On your second attempt, is the ID above the same as the one from your first attempt?</p>
+        <div class="d-branch">
+          <span class="d-tag d-yes">Same</span>
+          <span class="d-arrow" aria-hidden="true">→</span>
+          <span>Just press <strong>Begin</strong>.</span>
+        </div>
+        <div class="d-branch">
+          <span class="d-tag d-no">Different</span>
+          <span class="d-arrow" aria-hidden="true">→</span>
+          <span>Enter the ID from your first attempt below, then press <strong>Begin</strong>.</span>
+        </div>
+      </div>
       <p class="muted small">
         <label for="id-input">Returning? Enter your existing ID:</label>
         <input id="id-input" type="text" maxlength="5" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="e.g. BAKOR" />
