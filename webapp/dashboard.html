@@ -50,29 +50,6 @@
         <div class="card"><h3>Attempt 1 vs Attempt 2</h3><div id="scatter" class="chart-host"></div></div>
         <div class="card"><h3>Bland–Altman</h3><div id="ba" class="chart-host"></div></div>
       </div>
-    </section>
-
-    <section id="panel-convergent" class="panel hidden">
-      <div class="detail-row">
-        <div class="controls">
-          <label for="pair-select">Instrument pair</label>
-          <select id="pair-select"></select>
-        </div>
-        <p class="caption">Different instruments meant to capture the same construct, measured on each participant's first attempt.</p>
-      </div>
-      <div class="card-grid">
-        <div class="card"><h3>Score vs score</h3><div id="conv-scatter" class="chart-host"></div></div>
-        <div class="card"><h3>Bland–Altman (standardised)</h3><div id="conv-ba" class="chart-host"></div></div>
-      </div>
-    </section>
-
-    <section id="panel-icc" class="panel hidden">
-      <div class="card">
-        <div id="icc-host"></div>
-        <p class="caption" style="margin-top: 1rem;">Interactive chart by
-          <a href="https://www.surrey.ac.uk/people/ciro-della-monica" target="_blank" rel="noopener">Ciro Della Monica</a>
-          (University of Surrey). <a href="icc.html">Open as a full page →</a></p>
-      </div>
 
       <div class="card methods">
         <h2>The mathematics <span class="legend">exactly what the dashboard computes</span></h2>
@@ -188,6 +165,29 @@
               the difference is unit-free and the bias is interpretable.</p>
           </div>
         </details>
+      </div>
+    </section>
+
+    <section id="panel-convergent" class="panel hidden">
+      <div class="detail-row">
+        <div class="controls">
+          <label for="pair-select">Instrument pair</label>
+          <select id="pair-select"></select>
+        </div>
+        <p class="caption">Different instruments meant to capture the same construct, measured on each participant's first attempt.</p>
+      </div>
+      <div class="card-grid">
+        <div class="card"><h3>Score vs score</h3><div id="conv-scatter" class="chart-host"></div></div>
+        <div class="card"><h3>Bland–Altman (standardised)</h3><div id="conv-ba" class="chart-host"></div></div>
+      </div>
+    </section>
+
+    <section id="panel-icc" class="panel hidden">
+      <div class="card">
+        <div id="icc-host"></div>
+        <p class="caption" style="margin-top: 1rem;">Interactive chart by
+          <a href="https://www.surrey.ac.uk/people/ciro-della-monica" target="_blank" rel="noopener">Ciro Della Monica</a>
+          (University of Surrey). <a href="icc.html">Open as a full page →</a></p>
       </div>
     </section>
   </main>
