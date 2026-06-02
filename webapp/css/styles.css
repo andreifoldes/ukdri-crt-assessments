@@ -30,7 +30,9 @@ button.primary { font: inherit; font-weight: 600; background: var(--accent); col
 button.primary:hover { background: var(--accent-dark); }
 .done { padding: 1rem 0; text-align: center; }
 .done button { display: inline-block; margin: 0.3rem; }   /* overrides the asymmetric default margin so text-align:center applies */
-.participant-id { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.18em; color: var(--accent); margin: 0.5rem 0; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+.participant-id { display: inline-block; margin: 0.75rem 0; padding: 0.6rem 1.5rem; background: var(--accent-tint); border: 2px solid var(--accent); border-radius: 12px; text-align: center; }
+.participant-id .id-label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.participant-id .id-code { display: block; font-size: 2rem; font-weight: 700; letter-spacing: 0.25em; color: var(--accent); font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
 #id-input { font: inherit; text-transform: uppercase; letter-spacing: 0.12em; width: 7rem; padding: 0.3rem 0.45rem; border: 1px solid #999; border-radius: 6px; margin: 0 0.4rem; }
 button.secondary { font: inherit; background: #fff; color: var(--accent); border: 1px solid var(--accent); border-radius: 8px; padding: 0.3rem 0.8rem; cursor: pointer; }
 button.secondary:hover { background: var(--accent-tint); }

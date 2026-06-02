@@ -319,6 +319,11 @@
       "A formal test–retest reliability statistic is computed across all participants from the collected data, not from one person.</p></div>";
   }
 
+  // Markup for the prominent participant-ID badge (small label + large code).
+  function idBadge(token) {
+    return '<span class="id-label">Your ID</span><span class="id-code">' + token + "</span>";
+  }
+
   // Copy helper with a fallback for non-secure contexts (e.g. http on a LAN IP,
   // where navigator.clipboard is unavailable). Returns a Promise.
   function copyText(text) {
@@ -347,7 +352,7 @@
 
     const info = ensureToken();
     const attempt = nextAttempt({ completed: info.completed });
-    document.getElementById("participant-id").textContent = "Your ID: " + info.token;
+    document.getElementById("participant-id").innerHTML = idBadge(info.token);
     document.getElementById("attempt-note").textContent =
       "This will be attempt " + attempt +
       (info.persistent ? "" : " — note: persistent storage is unavailable, so test-retest pairing may not work.");
@@ -401,7 +406,7 @@
       const order = shuffle(registry.map((d) => d.id));
       const completedHtml =
         '<div class="done"><h2>Thank you</h2>' +
-        '<p class="participant-id">Your ID: ' + info.token + '</p>' +
+        '<div class="participant-id">' + idBadge(info.token) + "</div>" +
         '<p><button id="copy-id-done" class="secondary" type="button">Copy to clipboard</button> ' +
         '<span id="copy-feedback-done" class="id-feedback"></span></p>' +
         "<p>Your responses are complete.</p>" +
