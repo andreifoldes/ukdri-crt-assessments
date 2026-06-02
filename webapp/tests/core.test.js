@@ -140,3 +140,49 @@ test("normalizeToken is case-insensitive and letters-only, 5-letter canonical", 
   assert.equal(C.normalizeToken(""), null);
   assert.equal(C.normalizeToken(null), null);
 });
+
+test("scaleVector extracts one number per scale (HADS = anxiety+depression)", () => {
+  const results = { instruments: {
+    phq9: { scores: { total: 16 } },
+    ess: { scores: { total: 10 } },
+    hads: { scores: { anxiety: 11, depression: 9 } },
+    lawton: { scores: { total: 4 } },
+    psqi: { scores: { global: 13 } },
+  } };
+  assert.deepEqual(C.scaleVector(results), { phq9: 16, ess: 10, hads: 20, lawton: 4, psqi: 13 });
+});
+
+test("scaleVector omits scales that are absent or non-finite", () => {
+  const results = { instruments: { phq9: { scores: { total: 5 } }, psqi: { scores: {} } } };
+  assert.deepEqual(C.scaleVector(results), { phq9: 5 });
+});
+
+test("pearson: perfect, constant, and length guards", () => {
+  assert.ok(Math.abs(C.pearson([1, 2, 3], [2, 4, 6]) - 1) < 1e-9);
+  assert.ok(Math.abs(C.pearson([1, 2, 3], [6, 4, 2]) + 1) < 1e-9);
+  assert.equal(C.pearson([5, 5, 5], [1, 2, 3]), null);   // constant -> null
+  assert.equal(C.pearson([1], [1]), null);               // n<2 -> null
+  assert.equal(C.pearson([1, 2], [1]), null);            // length mismatch -> null
+});
+
+test("spearman: monotonic non-linear relationship -> 1", () => {
+  assert.ok(Math.abs(C.spearman([1, 2, 3, 4], [1, 4, 9, 16]) - 1) < 1e-9);
+});
+
+test("compareAttempts builds per-scale rows with deltas and a correlation", () => {
+  const prev = { phq9: 12, ess: 9, hads: 18, lawton: 7, psqi: 12 };
+  const curr = { phq9: 14, ess: 9, hads: 20, lawton: 7, psqi: 13 };
+  const out = C.compareAttempts(prev, curr);
+  assert.equal(out.n, 5);
+  const phq = out.rows.find((r) => r.scale === "phq9");
+  assert.deepEqual({ v1: phq.v1, v2: phq.v2, delta: phq.delta }, { v1: 12, v2: 14, delta: 2 });
+  assert.ok(out.pearson > 0.9 && out.pearson <= 1);   // strongly consistent profile
+  assert.ok(typeof out.spearman === "number");
+});
+
+test("compareAttempts skips scales missing from either attempt", () => {
+  const out = C.compareAttempts({ phq9: 5, ess: 8 }, { phq9: 6 });
+  assert.equal(out.n, 1);
+  assert.equal(out.rows[0].scale, "phq9");
+  assert.equal(out.pearson, null);   // only 1 pair -> no correlation
+});
