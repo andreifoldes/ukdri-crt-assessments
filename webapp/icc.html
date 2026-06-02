@@ -56,41 +56,7 @@
 
   <main class="container">
     <div class="card">
-      <!-- Interactive chart by Ciro Della Monica (embedded fragment) -->
-      <h2 class="sr-only">Interactive chart showing how measurement error decreases toward true state as the number of repeated observations increases, for instruments with different test-retest reliability levels.</h2>
-
-      <div style="padding: 0.5rem 0 0.5rem;">
-        <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 1.5rem; font-size: 13px; color: var(--color-text-secondary);">
-          <span style="display: flex; align-items: center; gap: 6px;">
-            <span style="width: 28px; height: 3px; background: #E24B4A; border-radius: 2px; display: inline-block;"></span>
-            Poor reliability (ICC = 0.40)
-          </span>
-          <span style="display: flex; align-items: center; gap: 6px;">
-            <span style="width: 28px; height: 3px; background: #EF9F27; border-radius: 2px; display: inline-block;"></span>
-            Moderate reliability (ICC = 0.70)
-          </span>
-          <span style="display: flex; align-items: center; gap: 6px;">
-            <span style="width: 28px; height: 3px; background: #1D9E75; border-radius: 2px; display: inline-block;"></span>
-            Good reliability (ICC = 0.90)
-          </span>
-        </div>
-
-        <div style="position: relative; width: 100%; height: 320px;">
-          <canvas id="reliabilityChart" role="img" aria-label="Line chart showing absolute error from true state on the y-axis versus number of repeated observations on the x-axis. Three curves are shown: poor reliability (ICC=0.40) starts high and decreases slowly; moderate reliability (ICC=0.70) decreases at a medium rate; good reliability (ICC=0.90) starts lower and asymptotes quickly toward zero.">
-            Three reliability curves showing error decreasing with more observations. Good reliability instruments require fewer observations to reach low error.
-          </canvas>
-        </div>
-
-        <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: var(--color-background-secondary); border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary);">
-          <p style="margin: 0 0 0.75rem; font-size: 13px; font-weight: 500; color: var(--color-text-primary);">Explore a scenario</p>
-          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <label for="iccSlider" style="font-size: 13px; color: var(--color-text-secondary);">ICC of your instrument</label>
-            <input type="range" min="0.2" max="0.98" step="0.01" value="0.70" id="iccSlider" style="flex: 1; min-width: 120px;" />
-            <span style="font-size: 14px; font-weight: 500; min-width: 36px; color: var(--color-text-primary);" id="iccVal">0.70</span>
-          </div>
-          <div style="margin-top: 8px; font-size: 13px; color: var(--color-text-secondary);" id="iccMsg"></div>
-        </div>
-      </div>
+      <div id="icc-host"></div>
     </div>
   </main>
 
@@ -101,103 +67,7 @@
   </footer>
 
   <script src="vendor/chart.umd.min.js"></script>
-  <script>
-    function errCurve(icc, n) {
-      const sigma = 1.0;
-      const errorSigma = Math.sqrt(1 - icc) * sigma;
-      return errorSigma / Math.sqrt(n);
-    }
-
-    const nObs = Array.from({ length: 20 }, (_, i) => i + 1);
-
-    function makeDataset(icc, color, label) {
-      return {
-        label,
-        data: nObs.map(n => parseFloat(errCurve(icc, n).toFixed(3))),
-        borderColor: color, backgroundColor: color + '18', borderWidth: 2.5,
-        pointRadius: 3, pointBackgroundColor: color, tension: 0.4, fill: false
-      };
-    }
-
-    const ctx = document.getElementById('reliabilityChart').getContext('2d');
-    const chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: nObs,
-        datasets: [
-          makeDataset(0.40, '#E24B4A', 'Poor (ICC=0.40)'),
-          makeDataset(0.70, '#EF9F27', 'Moderate (ICC=0.70)'),
-          makeDataset(0.90, '#1D9E75', 'Good (ICC=0.90)')
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              title: (items) => `${items[0].label} observation${items[0].label > 1 ? 's' : ''}`,
-              label: (item) => ` ${item.dataset.label}: error = ${item.formattedValue}`
-            }
-          }
-        },
-        scales: {
-          x: {
-            title: { display: true, text: 'Number of repeated observations', font: { size: 12 }, color: '#888' },
-            ticks: { color: '#888', font: { size: 11 }, autoSkip: false, maxRotation: 0,
-              callback: (v, i) => (i + 1) % 5 === 0 || i === 0 ? nObs[i] : '' }
-          },
-          y: {
-            min: 0, max: 0.85,
-            title: { display: true, text: 'Absolute error from true state', font: { size: 12 }, color: '#888' },
-            ticks: { color: '#888', font: { size: 11 }, callback: v => v.toFixed(2) },
-            grid: { color: 'rgba(136,135,128,0.12)' }
-          }
-        }
-      }
-    });
-
-    const slider = document.getElementById('iccSlider');
-    const iccVal = document.getElementById('iccVal');
-    const iccMsg = document.getElementById('iccMsg');
-
-    function nToReachThreshold(icc, threshold) {
-      for (let n = 1; n <= 50; n++) { if (errCurve(icc, n) <= threshold) return n; }
-      return '>50';
-    }
-
-    function updateMsg(icc) {
-      const n = nToReachThreshold(icc, 0.15);
-      const quality = icc >= 0.85 ? 'good' : icc >= 0.60 ? 'moderate' : 'poor';
-      iccMsg.textContent = `With ICC = ${icc.toFixed(2)} (${quality} reliability), you need ${n} observation${n === 1 ? '' : 's'} to bring average error below 0.15.`;
-    }
-
-    function updateChart(icc) {
-      const color = icc >= 0.85 ? '#1D9E75' : icc >= 0.60 ? '#EF9F27' : '#E24B4A';
-      const existing = chart.data.datasets.find(d => d.label && d.label.startsWith('Your'));
-      if (existing) {
-        existing.data = nObs.map(n => parseFloat(errCurve(icc, n).toFixed(3)));
-        existing.borderColor = color; existing.pointBackgroundColor = color;
-        existing.label = `Your instrument (ICC=${icc.toFixed(2)})`;
-      } else {
-        chart.data.datasets.push({
-          label: `Your instrument (ICC=${icc.toFixed(2)})`,
-          data: nObs.map(n => parseFloat(errCurve(icc, n).toFixed(3))),
-          borderColor: color, borderWidth: 2, borderDash: [6, 3], pointRadius: 0, tension: 0.4, fill: false
-        });
-      }
-      chart.update('none');
-    }
-
-    slider.addEventListener('input', () => {
-      const icc = parseFloat(slider.value);
-      iccVal.textContent = icc.toFixed(2);
-      updateMsg(icc);
-      updateChart(icc);
-    });
-
-    updateMsg(0.70);
-    updateChart(0.70);
-  </script>
+  <script src="js/icc-chart.js?v=2"></script>
+  <script>renderIccExplainer(document.getElementById("icc-host"));</script>
 </body>
 </html>

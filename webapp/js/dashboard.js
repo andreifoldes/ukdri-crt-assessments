@@ -218,13 +218,22 @@
     d3.select("#source").text(endpoint() ? "Google Sheet" : "sample data (no live endpoint)");
   }
 
+  // The ICC explainer is static (not data-driven); init it lazily the first time
+  // its tab is shown, so the canvas has a measured size (Chart.js needs a visible host).
+  function ensureIccChart() {
+    const host = document.getElementById("icc-host");
+    if (host && typeof window.renderIccExplainer === "function") window.renderIccExplainer(host);
+  }
+
   function render() {
     renderStatus();
     d3.selectAll(".tab").classed("active", function () { return this.dataset.tab === state.tab; });
     d3.select("#panel-retest").classed("hidden", state.tab !== "retest");
     d3.select("#panel-convergent").classed("hidden", state.tab !== "convergent");
+    d3.select("#panel-icc").classed("hidden", state.tab !== "icc");
     if (state.tab === "retest") { renderForest(); renderRetestDetail(); }
-    else renderConvergent();
+    else if (state.tab === "convergent") renderConvergent();
+    else if (state.tab === "icc") ensureIccChart();
   }
 
   // ---------- init ----------
