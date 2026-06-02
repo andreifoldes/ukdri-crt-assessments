@@ -124,6 +124,80 @@
     return header.map(_csvEscape).join(",") + "\n" + row.map(_csvEscape).join(",") + "\n";
   }
 
+  // ---------- test-retest comparison (per-person, illustrative) ----------
+
+  // One number per scale for the cross-visit comparison. HADS combines its two
+  // subscales (anxiety + depression) into a single total-distress figure.
+  const SCALE_META = [
+    { key: "phq9", label: "PHQ-9", get: (s) => s.total },
+    { key: "ess", label: "ESS", get: (s) => s.total },
+    { key: "hads", label: "HADS (A+D)", get: (s) => (Number(s.anxiety) || 0) + (Number(s.depression) || 0) },
+    { key: "lawton", label: "Lawton IADL", get: (s) => s.total },
+    { key: "psqi", label: "PSQI", get: (s) => s.global },
+  ];
+
+  function scaleVector(results) {
+    const out = {};
+    const inst = (results && results.instruments) || {};
+    for (const m of SCALE_META) {
+      const block = inst[m.key];
+      if (block && block.scores) {
+        const v = m.get(block.scores);
+        if (Number.isFinite(v)) out[m.key] = v;
+      }
+    }
+    return out;
+  }
+
+  function pearson(xs, ys) {
+    const n = xs.length;
+    if (n < 2 || ys.length !== n) return null;
+    let sx = 0, sy = 0, sxx = 0, syy = 0, sxy = 0;
+    for (let i = 0; i < n; i++) {
+      const x = xs[i], y = ys[i];
+      sx += x; sy += y; sxx += x * x; syy += y * y; sxy += x * y;
+    }
+    const cov = n * sxy - sx * sy;
+    const dx = Math.sqrt(n * sxx - sx * sx);
+    const dy = Math.sqrt(n * syy - sy * sy);
+    if (dx === 0 || dy === 0) return null;   // a constant series has no correlation
+    return cov / (dx * dy);
+  }
+
+  function _ranks(arr) {
+    const idx = arr.map((v, i) => [v, i]).sort((a, b) => a[0] - b[0]);
+    const ranks = new Array(arr.length);
+    let i = 0;
+    while (i < idx.length) {
+      let j = i;
+      while (j + 1 < idx.length && idx[j + 1][0] === idx[i][0]) j++;
+      const avg = (i + j) / 2 + 1;   // 1-based average rank for ties
+      for (let k = i; k <= j; k++) ranks[idx[k][1]] = avg;
+      i = j + 1;
+    }
+    return ranks;
+  }
+
+  function spearman(xs, ys) {
+    if (xs.length < 2 || ys.length !== xs.length) return null;
+    return pearson(_ranks(xs), _ranks(ys));
+  }
+
+  // Compare a participant's previous vs current scale vectors. Illustrative only
+  // (within-person, n = number of scales) — NOT a cohort reliability coefficient.
+  function compareAttempts(prev, curr) {
+    const rows = [], xs = [], ys = [];
+    for (const m of SCALE_META) {
+      const a = prev ? prev[m.key] : undefined;
+      const b = curr ? curr[m.key] : undefined;
+      if (Number.isFinite(a) && Number.isFinite(b)) {
+        rows.push({ scale: m.key, label: m.label, v1: a, v2: b, delta: b - a });
+        xs.push(a); ys.push(b);
+      }
+    }
+    return { rows, n: rows.length, pearson: pearson(xs, ys), spearman: spearman(xs, ys) };
+  }
+
   // ---------- browser-only: state + storage ----------
   const STORE_KEY = "ssrc_assessment_v1";
   const registry = [];
@@ -148,7 +222,7 @@
   }
   function resetParticipant() {
     const { store } = readStore();
-    store.token = makeToken(); store.completed = 0; writeStore(store);
+    store.token = makeToken(); store.completed = 0; store.history = []; writeStore(store);
   }
   function recordCompletion() {
     const { store } = readStore();
@@ -161,6 +235,18 @@
     const { store } = readStore();
     store.token = token;
     store.completed = Math.max(store.completed || 0, 1);
+    store.history = [];   // this device has no local attempt history for the restored ID
+    writeStore(store);
+  }
+  // Per-attempt scale vectors, kept locally to drive the cross-visit comparison.
+  function priorAttemptScores() {
+    const { store } = readStore();
+    const h = store.history || [];
+    return h.length ? h[h.length - 1] : null;
+  }
+  function recordAttemptScores(attempt, scores) {
+    const { store } = readStore();
+    store.history = (store.history || []).concat([{ attempt: attempt, scores: scores }]);
     writeStore(store);
   }
 
@@ -206,6 +292,26 @@
     const a = document.createElement("a");
     a.href = url; a.download = filename; document.body.appendChild(a); a.click();
     document.body.removeChild(a); URL.revokeObjectURL(url);
+  }
+
+  // Build the per-person cross-visit comparison HTML for the completion screen.
+  function renderRetestHtml(cmp, prevAttempt, currAttempt) {
+    const fmtDelta = (d) => (d > 0 ? "+" + d : String(d));
+    const rows = cmp.rows.map((r) =>
+      "<tr><td>" + r.label + "</td><td>" + r.v1 + "</td><td>" + r.v2 +
+      '</td><td class="delta">' + fmtDelta(r.delta) + "</td></tr>"
+    ).join("");
+    const corr = (cmp.pearson === null)
+      ? "<p class=\"muted small\">Not enough overlapping scales to compute a consistency figure.</p>"
+      : "<p>Within-person consistency across the " + cmp.n +
+        " scale scores (illustrative only — not a formal reliability coefficient): " +
+        "Pearson r = " + cmp.pearson.toFixed(2) +
+        (cmp.spearman === null ? "" : "; Spearman ρ = " + cmp.spearman.toFixed(2)) + ".</p>";
+    return '<div class="retest"><h3>How your scores compare with your previous attempt</h3>' +
+      "<table><thead><tr><th>Scale</th><th>Attempt " + prevAttempt + "</th><th>Attempt " + currAttempt +
+      "</th><th>Change</th></tr></thead><tbody>" + rows + "</tbody></table>" + corr +
+      '<p class="muted small">Higher is worse for PHQ-9, ESS, HADS and PSQI; higher is better for Lawton IADL. ' +
+      "A formal test–retest reliability statistic is computed across all participants from the collected data, not from one person.</p></div>";
   }
 
   // Copy helper with a fallback for non-secure contexts (e.g. http on a LAN IP,
@@ -291,11 +397,12 @@
       const completedHtml =
         '<div class="done"><h2>Thank you</h2>' +
         '<p class="participant-id">Your ID: ' + info.token + '</p>' +
-        '<p><button id="copy-id-done" class="secondary" type="button">Copy ID</button> ' +
+        '<p><button id="copy-id-done" class="secondary" type="button">Copy to clipboard</button> ' +
         '<span id="copy-feedback-done" class="id-feedback"></span></p>' +
         "<p>Your responses are complete. Please download your results file(s) and return them as instructed.</p>" +
         '<button id="dl-json" class="primary" type="button">Download results (JSON)</button> ' +
-        '<button id="dl-csv" class="primary" type="button">Download results (CSV)</button></div>';
+        '<button id="dl-csv" class="primary" type="button">Download results (CSV)</button>' +
+        '<div id="retest-summary"></div></div>';
 
       const survey = new Survey.Model(toSurveyJson(defsById, order, { completedHtml }));
       if (debug) survey.data = autofillData(order);
@@ -309,8 +416,21 @@
           storagePersistent: info.persistent, timestamp: new Date().toISOString(),
         };
         const results = buildResults(order, defsById, responsesByInstrument, meta);
-        recordCompletion();
         latest = { results, base: "assessment-" + info.token + "-attempt" + attempt + "-" + meta.timestamp.replace(/[:.]/g, "-") };
+
+        // Cross-visit comparison: read the previous attempt BEFORE recording this one.
+        const prior = priorAttemptScores();
+        const currVector = scaleVector(results);
+        recordCompletion();
+        recordAttemptScores(attempt, currVector);
+        if (prior && prior.scores) {
+          const cmp = compareAttempts(prior.scores, currVector);
+          const html = renderRetestHtml(cmp, prior.attempt, attempt);
+          setTimeout(() => {   // completion page renders after onComplete; inject next tick
+            const el = document.getElementById("retest-summary");
+            if (el) el.innerHTML = html;
+          }, 0);
+        }
       });
 
       landing.hidden = true;
@@ -321,7 +441,7 @@
     });
   }
 
-  const API = { makeToken, normalizeToken, nextAttempt, shuffle, scoreInstrument, buildResults, toCSVRow };
+  const API = { makeToken, normalizeToken, nextAttempt, shuffle, scoreInstrument, buildResults, toCSVRow, scaleVector, pearson, spearman, compareAttempts };
   if (typeof module !== "undefined" && module.exports) module.exports = API;
   else Object.assign(global, API);
 

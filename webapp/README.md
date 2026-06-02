@@ -30,6 +30,15 @@ same on both visits.
   punctuation/spaces; restoring an ID marks the session as a retest (attempt 2).
 - "Not you? Start as a new participant" issues a fresh token on shared devices.
 
+On completing a **second (or later) attempt on the same device**, the thank-you
+screen shows a per-person comparison: each scale's visit-1 vs visit-2 score and
+the change, plus an *illustrative* within-person consistency figure (Pearson r and
+Spearman ρ across the 5 scale scores). This is a teaching aid, not a formal
+statistic — a real test-retest reliability coefficient (ICC, etc.) is computed
+across all participants from the collected CSVs in offline analysis. Prior-attempt
+scores are kept in `localStorage`; the comparison only appears when the previous
+attempt was completed in the same browser, and is cleared on reset / ID change.
+
 Notes:
 - The attempt counter is not capped: a third+ completion on the same browser is
   recorded with `attempt` ≥ 3, so do not assume `attempt ∈ {1, 2}` when analysing.

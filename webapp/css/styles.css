@@ -1,15 +1,41 @@
-:root { --fg: #1a1a1a; --muted: #666; --accent: #2a5db0; }
+/* Colour-blind-safe palette (Okabe-Ito). Direction is also conveyed by +/- signs,
+   never colour alone. */
+:root {
+  --fg: #1a1a1a;
+  --muted: #595959;          /* AA contrast on white */
+  --accent: #0072B2;         /* Okabe-Ito blue */
+  --accent-dark: #005b8f;
+  --accent-tint: #e6f1f8;
+  --worse: #D55E00;          /* Okabe-Ito vermillion */
+  --better: #009E73;         /* Okabe-Ito bluish green */
+
+}
+/* Theme the SurveyJS runtime to the same accessible blue. SurveyJS sets these
+   variables on .sd-root-modern, so we must override at that selector (this
+   stylesheet is loaded after survey-core.min.css, so it wins). */
+.sd-root-modern {
+  --sjs-primary-backcolor: #0072B2;
+  --sjs-primary-backcolor-dark: #005b8f;
+  --sjs-primary-backcolor-light: rgba(0, 114, 178, 0.12);
+  --sjs-special-red: #D55E00;
+}
 * { box-sizing: border-box; }
 body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--fg); line-height: 1.5; margin: 0; background: #fafafa; }
 .container { max-width: 760px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
 h1 { font-size: 1.6rem; }
 .muted { color: var(--muted); } .small { font-size: 0.9rem; }
 button.primary { font: inherit; font-weight: 600; background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 0.6rem 1.2rem; cursor: pointer; margin: 0.25rem 0.5rem 0.25rem 0; }
-button.primary:hover { filter: brightness(1.07); }
-.done { padding: 1rem 0; }
+button.primary:hover { background: var(--accent-dark); }
+.done { padding: 1rem 0; text-align: center; }
+.done > * { margin-left: auto; margin-right: auto; }
 .participant-id { font-size: 1.5rem; font-weight: 700; letter-spacing: 0.18em; color: var(--accent); margin: 0.5rem 0; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
-#id-input { font: inherit; text-transform: uppercase; letter-spacing: 0.12em; width: 7rem; padding: 0.3rem 0.45rem; border: 1px solid #ccc; border-radius: 6px; margin: 0 0.4rem; }
+#id-input { font: inherit; text-transform: uppercase; letter-spacing: 0.12em; width: 7rem; padding: 0.3rem 0.45rem; border: 1px solid #999; border-radius: 6px; margin: 0 0.4rem; }
 button.secondary { font: inherit; background: #fff; color: var(--accent); border: 1px solid var(--accent); border-radius: 8px; padding: 0.3rem 0.8rem; cursor: pointer; }
-button.secondary:hover { background: #f0f4fb; }
+button.secondary:hover { background: var(--accent-tint); }
 .id-feedback { display: inline-block; margin-left: 0.4rem; color: var(--accent); }
+.retest { margin-top: 1.5rem; border-top: 1px solid #d0d0d0; padding-top: 1rem; }
+.retest h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.retest table { border-collapse: collapse; width: 100%; max-width: 30rem; }
+.retest th, .retest td { text-align: center; padding: 0.35rem 0.6rem; border-bottom: 1px solid #e0e0e0; }
+.retest td.delta { font-weight: 700; }   /* neutral: direction varies by scale (see note), so no good/bad colour */
 [hidden] { display: none !important; }
