@@ -7,14 +7,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/dashboard.css?v=3" />
 </head>
 <body>
   <header class="masthead">
     <div class="masthead-inner">
       <div class="title-block">
         <p class="eyebrow">UKDRI–SSRC workshop · live</p>
-        <h1>Questionnaire reliability</h1>
+        <h1>Assessment reliability <span class="qual">test–retest</span></h1>
       </div>
       <dl class="stats">
         <div><dt>Runs</dt><dd id="run-count">0</dd></div>
@@ -36,7 +36,7 @@
   <main class="container">
     <section id="panel-retest" class="panel">
       <div class="card forest-card">
-        <h2>Per-scale agreement <span class="legend">poor · moderate · good · excellent (Koo &amp; Li)</span></h2>
+        <h2>Per-scale agreement <span class="legend">poor · fair · good · excellent (Cicchetti)</span></h2>
         <div id="forest" class="chart-host"></div>
       </div>
       <div class="detail-row">
@@ -68,15 +68,15 @@
 
   <footer class="foot">
     <p>Anonymous aggregate view — only a 5-letter participant token is used to pair attempts; no personal data is shown.</p>
-    <p class="ref">ICC interpretation bands — poor &lt;&nbsp;0.5 · moderate 0.5–0.75 · good 0.75–0.9 · excellent &gt;&nbsp;0.9 — follow
-      Koo, T.&nbsp;K., &amp; Li, M.&nbsp;Y. (2016). A guideline of selecting and reporting intraclass correlation
-      coefficients for reliability research. <em>Journal of Chiropractic Medicine, 15</em>(2), 155–163.
-      <a href="https://doi.org/10.1016/j.jcm.2016.02.012" target="_blank" rel="noopener">doi:10.1016/j.jcm.2016.02.012</a></p>
+    <p class="ref">ICC interpretation bands — poor &lt;&nbsp;0.40 · fair 0.40–0.59 · good 0.60–0.74 · excellent &ge;&nbsp;0.75 — follow
+      Cicchetti, D.&nbsp;V. (1994). Guidelines, criteria, and rules of thumb for evaluating normed and standardized
+      assessment instruments in psychology. <em>Psychological Assessment, 6</em>(4), 284–290.
+      <a href="https://doi.org/10.1037/1040-3590.6.4.284" target="_blank" rel="noopener">doi:10.1037/1040-3590.6.4.284</a></p>
   </footer>
 
   <script src="vendor/d3.v7.min.js"></script>
-  <script src="js/config.js"></script>
-  <script src="js/stats.js"></script>
-  <script src="js/dashboard.js"></script>
+  <script src="js/config.js?v=3"></script>
+  <script src="js/stats.js?v=3"></script>
+  <script src="js/dashboard.js?v=3"></script>
 </body>
 </html>

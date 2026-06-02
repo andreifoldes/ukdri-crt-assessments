@@ -72,11 +72,11 @@ test("icc21 returns ~1 for perfect agreement and null below n=2", () => {
   assert.equal(St.icc21([{ a1: 1, a2: 2 }]).icc, null);
 });
 
-test("iccBand uses Koo & Li thresholds", () => {
-  assert.equal(St.iccBand(0.3), "poor");
-  assert.equal(St.iccBand(0.6), "moderate");
-  assert.equal(St.iccBand(0.8), "good");
-  assert.equal(St.iccBand(0.95), "excellent");
+test("iccBand uses Cicchetti (1994) thresholds", () => {
+  assert.equal(St.iccBand(0.3), "poor");      // < 0.40
+  assert.equal(St.iccBand(0.5), "fair");      // 0.40–0.59
+  assert.equal(St.iccBand(0.65), "good");     // 0.60–0.74
+  assert.equal(St.iccBand(0.8), "excellent"); // ≥ 0.75
   assert.equal(St.iccBand(null), "n/a");
 });
 

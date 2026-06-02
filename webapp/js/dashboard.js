@@ -11,7 +11,7 @@
 
   // Okabe-Ito-derived colours (consistent with css/styles.css). Band colour is a
   // redundant cue: the forest plot also labels each band in words.
-  const BAND_COLOR = { poor: "#D55E00", moderate: "#E69F00", good: "#0072B2", excellent: "#009E73", "n/a": "#999" };
+  const BAND_COLOR = { poor: "#D55E00", fair: "#E69F00", good: "#0072B2", excellent: "#009E73", "n/a": "#999" };
   const POINT = "#0072B2";
 
   let state = { rows: [], updated: null, ok: false, scale: St.SCALES[0].key, pair: St.CONVERGENT[0].id, tab: "retest" };
@@ -75,13 +75,13 @@
     const svg = freshSvg(sel, w, h);
     const x = d3.scaleLinear().domain([0, 1]).range([m.l, w - m.r]);
 
-    // qualitative reference bands (Koo & Li)
-    const bands = [[0, 0.5, "#D55E00"], [0.5, 0.75, "#E69F00"], [0.75, 0.9, "#0072B2"], [0.9, 1, "#009E73"]];
+    // qualitative reference bands (Cicchetti, 1994)
+    const bands = [[0, 0.40, "#D55E00"], [0.40, 0.60, "#E69F00"], [0.60, 0.75, "#0072B2"], [0.75, 1, "#009E73"]];
     svg.append("g").selectAll("rect").data(bands).join("rect")
       .attr("x", (d) => x(d[0])).attr("width", (d) => x(d[1]) - x(d[0]))
       .attr("y", m.t - 6).attr("height", h - m.t - m.b + 6)
       .attr("fill", (d) => d[2]).attr("opacity", 0.06);
-    svg.append("g").selectAll("line.grid").data([0.5, 0.75, 0.9]).join("line")
+    svg.append("g").selectAll("line.grid").data([0.40, 0.60, 0.75]).join("line")
       .attr("class", "grid").attr("x1", (d) => x(d)).attr("x2", (d) => x(d))
       .attr("y1", m.t - 6).attr("y2", h - m.b).attr("stroke", "#ccc").attr("stroke-dasharray", "3 3");
 

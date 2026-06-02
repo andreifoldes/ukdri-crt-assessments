@@ -169,12 +169,12 @@
     return out;
   }
 
-  // Qualitative band for an ICC point estimate (Koo & Li, 2016).
+  // Qualitative band for an ICC point estimate (Cicchetti, 1994).
   function iccBand(icc) {
     if (icc === null || icc === undefined || !Number.isFinite(icc)) return "n/a";
-    if (icc < 0.5) return "poor";
-    if (icc < 0.75) return "moderate";
-    if (icc < 0.9) return "good";
+    if (icc < 0.40) return "poor";
+    if (icc < 0.60) return "fair";
+    if (icc < 0.75) return "good";
     return "excellent";
   }
 

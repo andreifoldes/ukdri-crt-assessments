@@ -60,6 +60,7 @@ body {
   letter-spacing: -0.01em;
 }
 .subtitle { margin: 0.55rem 0 0; max-width: 40ch; color: #d6cfc1; font-size: 0.98rem; }
+.qual { font-family: "Spline Sans", sans-serif; font-weight: 400; font-size: 0.42em; letter-spacing: 0.06em; text-transform: uppercase; color: #8fb8d6; vertical-align: middle; margin-left: 0.4rem; white-space: nowrap; }
 
 .stats { display: flex; gap: 1.6rem; margin: 0; }
 .stats div { text-align: right; }
