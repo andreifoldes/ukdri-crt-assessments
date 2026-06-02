@@ -6,6 +6,11 @@
     ? require("./scoring.js")
     : global;
 
+  // submit.js is pure here (flattenResults); in the browser it attaches to window.
+  const Sub = (typeof module !== "undefined" && module.exports)
+    ? require("./submit.js")
+    : global;
+
   // ---------- pure helpers ----------
 
   // Non-identifying participant ID used only to pair a participant's two attempts.
@@ -111,17 +116,12 @@
   }
 
   function toCSVRow(results) {
-    const header = ["participantToken", "attempt", "storagePersistent", "timestamp", "presentationOrder"];
-    const row = [results.participantToken, results.attempt, results.storagePersistent, results.timestamp,
-      results.presentationOrder.join("|")];
-    for (const id of results.presentationOrder) {
-      const block = results.instruments[id];
-      if (!block) continue;
-      for (const r of block.responses) { header.push(id + "_item_" + r.itemId); row.push(r.value); } // CSV stores numeric values only; human-readable labels live in the JSON export
-      for (const k of Object.keys(block.scores)) { header.push(id + "_score_" + k); row.push(block.scores[k]); }
-      for (const k of Object.keys(block.bands)) { header.push(id + "_band_" + k); row.push(block.bands[k]); }
-    }
-    return header.map(_csvEscape).join(",") + "\n" + row.map(_csvEscape).join(",") + "\n";
+    // flattenResults (submit.js) is the single source of truth for the column
+    // mapping; CSV stores numeric values only, human-readable labels live in JSON.
+    const row = Sub.flattenResults(results);
+    const header = Object.keys(row);
+    return header.map(_csvEscape).join(",") + "\n" +
+      header.map((k) => _csvEscape(row[k])).join(",") + "\n";
   }
 
   // ---------- test-retest comparison (per-person, illustrative) ----------
@@ -413,8 +413,12 @@
         (attempt === 1
           ? '<p class="note">After this <strong>first attempt</strong>, please wait for the speaker\'s instructions before starting your <strong>second attempt</strong>. Keep your ID above.</p>'
           : "") +
+        '<div id="submit-status" class="muted">Saving…</div>' +
+        '<div id="dl-buttons" hidden>' +
+        '<p class="muted small">If saving online fails, download your results and send them to the organiser:</p>' +
         '<button id="dl-json" class="primary" type="button">Download results (JSON)</button> ' +
         '<button id="dl-csv" class="primary" type="button">Download results (CSV)</button>' +
+        '</div>' +
         '<div id="retest-summary"></div></div>';
 
       const survey = new Survey.Model(toSurveyJson(defsById, order, { completedHtml }));
@@ -443,6 +447,31 @@
             const el = document.getElementById("retest-summary");
             if (el) el.innerHTML = html;
           }, 0);
+        }
+
+        // Send this run to the central sheet; fall back to local download on failure.
+        function finishSubmission(ok) {
+          setTimeout(() => {   // completion page renders after onComplete; touch DOM next tick
+            const status = document.getElementById("submit-status");
+            const dl = document.getElementById("dl-buttons");
+            if (ok) {
+              if (status) status.textContent = "✓ Saved to the organisers' sheet.";
+            } else {
+              if (status) status.textContent =
+                "Couldn't save online — a copy has downloaded. Please send it to the organiser.";
+              if (dl) dl.hidden = false;
+              download(latest.base + ".csv", toCSVRow(latest.results), "text/csv");
+              download(latest.base + ".json", JSON.stringify(latest.results, null, 2), "application/json");
+            }
+          }, 0);
+        }
+
+        const endpoint = global.SHEET_ENDPOINT;
+        if (Sub.shouldSubmit(endpoint)) {
+          Sub.postToSheet(endpoint, Sub.buildSubmitPayload(results, global.SHEET_FORM_ID))
+            .then((r) => finishSubmission(!!(r && r.ok)));
+        } else {
+          finishSubmission(false);
         }
       });
 
