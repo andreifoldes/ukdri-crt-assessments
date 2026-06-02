@@ -9,9 +9,12 @@
 // realistic-but-imperfect test-retest agreement. Deterministic (seeded PRNG),
 // so re-running reproduces byte-identical output.
 //
-// Usage:  node analysis/generate_synthetic.js
-// Writes: analysis/sample-data/synthetic_sessions.csv  (flat, one row/session)
-//         analysis/sample-data/synthetic_sessions.json (array of full results)
+// Usage:  node analysis/generate_synthetic.js [--n <count>] [--seed <int>] [--out <prefix>]
+//   default (no args): 4 fixed-token participants, seed 20260602, prefix
+//   "synthetic_sessions" — reproduces the committed baseline byte-for-byte.
+//   With --n: generate <count> participants with seeded random CVCVC tokens.
+// Writes: analysis/sample-data/<prefix>.csv  (flat, one row/session)
+//         analysis/sample-data/<prefix>.json (array of full results)
 
 const fs = require("fs");
 const path = require("path");
@@ -36,7 +39,21 @@ function mulberry32(seed) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-const rng = mulberry32(20260602);
+// CLI args.
+function parseArgs(argv) {
+  const a = {};
+  for (let i = 2; i < argv.length; i++) {
+    if (argv[i] === "--n") a.n = parseInt(argv[++i], 10);
+    else if (argv[i] === "--seed") a.seed = parseInt(argv[++i], 10);
+    else if (argv[i] === "--out") a.out = argv[++i];
+  }
+  return a;
+}
+const ARG = parseArgs(process.argv);
+const SEED = ARG.seed != null ? ARG.seed : 20260602;
+const OUT = ARG.out || "synthetic_sessions";
+
+const rng = mulberry32(SEED);
 const randInt = (lo, hi) => lo + Math.floor(rng() * (hi - lo + 1));
 const pick = (arr) => arr[Math.floor(rng() * arr.length)];
 
@@ -87,7 +104,21 @@ function perturb(def, base) {
   return next;
 }
 
-const PARTICIPANTS = ["BAKOR", "DOMIR", "FELUS", "GINOT"];
+// Pronounceable CVCVC token, same alphabet as the app's makeToken.
+function genToken() {
+  const C = "BCDFGHJKLMNPRSTVWXZ", V = "AEIOU";
+  const p = (s) => s[Math.floor(rng() * s.length)];
+  return p(C) + p(V) + p(C) + p(V) + p(C);
+}
+
+let PARTICIPANTS;
+if (ARG.n != null) {
+  PARTICIPANTS = [];
+  const seen = new Set();
+  while (PARTICIPANTS.length < ARG.n) { const t = genToken(); if (!seen.has(t)) { seen.add(t); PARTICIPANTS.push(t); } }
+} else {
+  PARTICIPANTS = ["BAKOR", "DOMIR", "FELUS", "GINOT"]; // committed baseline
+}
 
 function buildSession(token, attempt, responsesByInstrument, isoTime) {
   const order = seededShuffle(INSTRUMENT_IDS);
@@ -124,9 +155,9 @@ const csv = [header.map(csvEscape).join(",")]
 
 const outDir = path.join(__dirname, "sample-data");
 fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(path.join(outDir, "synthetic_sessions.csv"), csv);
-fs.writeFileSync(path.join(outDir, "synthetic_sessions.json"), JSON.stringify(sessions, null, 2) + "\n");
+fs.writeFileSync(path.join(outDir, OUT + ".csv"), csv);
+fs.writeFileSync(path.join(outDir, OUT + ".json"), JSON.stringify(sessions, null, 2) + "\n");
 
-console.log(`Wrote ${rows.length} sessions (${PARTICIPANTS.length} participants x 2 attempts), ${header.length} columns.`);
-console.log(`  analysis/sample-data/synthetic_sessions.csv`);
-console.log(`  analysis/sample-data/synthetic_sessions.json`);
+console.log(`Wrote ${rows.length} sessions (${PARTICIPANTS.length} participants x 2 attempts), ${header.length} columns. seed=${SEED}`);
+console.log(`  analysis/sample-data/${OUT}.csv`);
+console.log(`  analysis/sample-data/${OUT}.json`);
