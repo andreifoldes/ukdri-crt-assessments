@@ -25,6 +25,7 @@ body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; co
 h1 { font-size: 1.6rem; }
 .muted { color: var(--muted); } .small { font-size: 0.9rem; }
 .note { max-width: 32rem; margin: 0.75rem 0; padding: 0.6rem 0.9rem; background: var(--accent-tint); border-left: 5px solid var(--accent); border-radius: 8px; }
+.done .note { margin: 0.9rem auto; text-align: left; }
 .event-info { margin: 0.25rem 0 1rem; font-size: 1.05rem; }
 .event-date { font-size: 0.95rem; }
 .decision { max-width: 32rem; margin: 0.4rem 0 1rem; font-size: 0.92rem; }

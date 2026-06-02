@@ -410,6 +410,9 @@
         '<p><button id="copy-id-done" class="secondary" type="button">Copy to clipboard</button> ' +
         '<span id="copy-feedback-done" class="id-feedback"></span></p>' +
         "<p>Your responses are complete.</p>" +
+        (attempt === 1
+          ? '<p class="note">After this <strong>first attempt</strong>, please wait for the speaker\'s instructions before starting your <strong>second attempt</strong>. Keep your ID above.</p>'
+          : "") +
         '<button id="dl-json" class="primary" type="button">Download results (JSON)</button> ' +
         '<button id="dl-csv" class="primary" type="button">Download results (CSV)</button>' +
         '<div id="retest-summary"></div></div>';
