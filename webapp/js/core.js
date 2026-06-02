@@ -291,7 +291,7 @@
       const completedHtml =
         '<div class="done"><h2>Thank you</h2>' +
         '<p class="participant-id">Your ID: ' + info.token + '</p>' +
-        '<p><button id="copy-id-done" class="secondary" type="button">Copy ID</button> ' +
+        '<p><button id="copy-id-done" class="secondary" type="button">Copy to clipboard</button> ' +
         '<span id="copy-feedback-done" class="id-feedback"></span></p>' +
         "<p>Your responses are complete. Please download your results file(s) and return them as instructed.</p>" +
         '<button id="dl-json" class="primary" type="button">Download results (JSON)</button> ' +
