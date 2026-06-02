@@ -208,6 +208,25 @@
     document.body.removeChild(a); URL.revokeObjectURL(url);
   }
 
+  // Copy helper with a fallback for non-secure contexts (e.g. http on a LAN IP,
+  // where navigator.clipboard is unavailable). Returns a Promise.
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise((resolve, reject) => {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly", "");
+        ta.style.position = "absolute"; ta.style.left = "-9999px";
+        document.body.appendChild(ta); ta.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        ok ? resolve() : reject(new Error("copy command failed"));
+      } catch (e) { reject(e); }
+    });
+  }
+
   function startApp() {
     const q = global.__INSTRUMENT_QUEUE__ || [];
     q.forEach(registerInstrument); q.length = 0;
@@ -241,9 +260,22 @@
     document.getElementById("set-id-btn").addEventListener("click", applyEnteredId);
     idInput.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); applyEnteredId(); } });
 
+    // Copy ID to clipboard (landing button + completion-screen button via delegation below).
+    function copyIdWithFeedback(feedbackEl) {
+      copyText(info.token)
+        .then(() => { if (feedbackEl) feedbackEl.textContent = "Copied!"; })
+        .catch(() => { if (feedbackEl) feedbackEl.textContent = "Select the ID and copy it manually."; });
+    }
+    document.getElementById("copy-id-btn").addEventListener("click", () =>
+      copyIdWithFeedback(document.getElementById("copy-feedback")));
+
     // Latest results held for the completion-page download buttons (event delegation).
     let latest = null;
     document.addEventListener("click", (e) => {
+      if (e.target && e.target.id === "copy-id-done") {
+        copyIdWithFeedback(document.getElementById("copy-feedback-done"));
+        return;
+      }
       if (!latest) return;
       if (e.target && e.target.id === "dl-json")
         download(latest.base + ".json", JSON.stringify(latest.results, null, 2), "application/json");
@@ -259,6 +291,8 @@
       const completedHtml =
         '<div class="done"><h2>Thank you</h2>' +
         '<p class="participant-id">Your ID: ' + info.token + '</p>' +
+        '<p><button id="copy-id-done" class="secondary" type="button">Copy ID</button> ' +
+        '<span id="copy-feedback-done" class="id-feedback"></span></p>' +
         "<p>Your responses are complete. Please download your results file(s) and return them as instructed.</p>" +
         '<button id="dl-json" class="primary" type="button">Download results (JSON)</button> ' +
         '<button id="dl-csv" class="primary" type="button">Download results (CSV)</button></div>';
