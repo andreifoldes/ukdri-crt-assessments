@@ -22,21 +22,19 @@
       <p class="muted small">Your responses are anonymous. This ID is the only thing that links your <strong>attempt&nbsp;1</strong> and <strong>attempt&nbsp;2</strong> results, so please note it and use the <strong>same</strong> ID on both visits.</p>
       <div class="decision">
         <p class="d-q">On your second attempt, is the ID above the same as the one from your first attempt?</p>
-        <div class="d-branch">
+        <div class="funnel funnel-yes">
           <span class="d-tag d-yes">Same</span>
-          <span class="d-arrow" aria-hidden="true">→</span>
-          <span>Just press <strong>Begin</strong>.</span>
+          <p>Just press <strong>Begin</strong>.</p>
         </div>
-        <div class="d-branch">
+        <div class="funnel funnel-no">
           <span class="d-tag d-no">Different</span>
-          <span class="d-arrow" aria-hidden="true">→</span>
-          <span>Enter the ID from your first attempt here, then press <strong>Begin</strong>:</span>
-        </div>
-        <div class="d-returning">
-          <label for="id-input">Existing ID:</label>
-          <input id="id-input" type="text" maxlength="5" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="e.g. BAKOR" />
-          <button id="set-id-btn" class="secondary" type="button">Use this ID</button>
-          <span id="id-feedback" class="id-feedback"></span>
+          <p>Enter the ID from your first attempt here, then press <strong>Begin</strong>:</p>
+          <div class="d-returning">
+            <label for="id-input">My ID:</label>
+            <input id="id-input" type="text" maxlength="5" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="e.g. BAKOR" />
+            <button id="set-id-btn" class="secondary" type="button">Use this ID</button>
+            <span id="id-feedback" class="id-feedback"></span>
+          </div>
         </div>
       </div>
       <button id="begin-btn" class="primary" type="button">Begin</button>
