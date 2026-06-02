@@ -81,6 +81,31 @@ If submission fails (offline, endpoint down, or running locally without the
 secrets), the completion screen reveals the local JSON/CSV download buttons and
 auto-downloads a copy so no run is ever lost.
 
+## Live reliability dashboard
+
+`dashboard.html` is a self-refreshing D3 view of the collected data, meant for the
+projector during the workshop. It reads the same sheet back through the Apps
+Script's `doGet` (reusing the injected `SHEET_ENDPOINT`), polls every **20 s**, and
+draws:
+
+- **Test–retest** (primary): a **forest plot** of per-scale **ICC(2,1)** with 95% CI
+  (two-way random, single rater, absolute agreement — the `irr::icc` "agreement"
+  computation), plus a scale-selectable **scatter** (attempt 1 vs attempt 2, with the
+  identity line) and **Bland–Altman** (mean vs difference, bias ± 1.96 SD).
+- **Cross-instrument convergent**: scatter + standardised Bland–Altman for instruments
+  sharing a construct — **HADS-Depression vs PHQ-9** and **PSQI vs ESS** — using each
+  participant's first attempt.
+
+All maths lives in `js/stats.js` (pure, unit-tested in `tests/stats.test.js`); charts
+in `js/dashboard.js`; D3 v7 is vendored in `vendor/`. With no live endpoint (local dev
+/ mis-deploy) the page falls back to `tests/fixtures/sample-rows.json`, so it renders
+offline. The view is anonymous and aggregate — only the 5-letter token is used to pair
+attempts.
+
+> **One-time step:** the read-back needs the `doGet` added to `apps-script/Code.gs`.
+> After adding it you must **re-deploy a new version** of the existing Apps Script
+> deployment (keeping the same `/exec` URL). See `../apps-script/README.md`.
+
 ## Editing item content
 
 Each scale is one file in `js/instruments/`. Edit the `text`/`options` there; the

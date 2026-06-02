@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reliability dashboard · UKDRI–SSRC workshop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="title-block">
+        <p class="eyebrow">UKDRI–SSRC workshop · live</p>
+        <h1>Questionnaire reliability</h1>
+        <p class="subtitle">Each participant completes the battery twice. As runs arrive, we watch agreement between attempts build up in real time.</p>
+      </div>
+      <dl class="stats">
+        <div><dt>Runs</dt><dd id="run-count">0</dd></div>
+        <div><dt>Paired</dt><dd id="pair-count">0</dd></div>
+        <div><dt>Updated</dt><dd id="last-updated">—</dd></div>
+      </dl>
+    </div>
+    <div class="meta-strip">
+      <span id="status" class="status">connecting…</span>
+      <span class="source-note">Source: <span id="source">—</span> · auto-refreshes every 20s</span>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Analysis view">
+    <button class="tab active" data-tab="retest">Test–retest</button>
+    <button class="tab" data-tab="convergent">Cross-instrument</button>
+  </nav>
+
+  <main class="container">
+    <section id="panel-retest" class="panel">
+      <div class="card forest-card">
+        <h2>Per-scale agreement <span class="legend">poor · moderate · good · excellent (Koo &amp; Li)</span></h2>
+        <div id="forest" class="chart-host"></div>
+      </div>
+      <div class="detail-row">
+        <div class="controls">
+          <label for="scale-select">Scale</label>
+          <select id="scale-select"></select>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="card"><h3>Attempt 1 vs Attempt 2</h3><div id="scatter" class="chart-host"></div></div>
+        <div class="card"><h3>Bland–Altman</h3><div id="ba" class="chart-host"></div></div>
+      </div>
+    </section>
+
+    <section id="panel-convergent" class="panel hidden">
+      <div class="detail-row">
+        <div class="controls">
+          <label for="pair-select">Instrument pair</label>
+          <select id="pair-select"></select>
+        </div>
+        <p class="caption">Different instruments meant to capture the same construct, measured on each participant's first attempt.</p>
+      </div>
+      <div class="card-grid">
+        <div class="card"><h3>Score vs score</h3><div id="conv-scatter" class="chart-host"></div></div>
+        <div class="card"><h3>Bland–Altman (standardised)</h3><div id="conv-ba" class="chart-host"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Anonymous aggregate view — only a 5-letter participant token is used to pair attempts; no personal data is shown.</p>
+  </footer>
+
+  <script src="vendor/d3.v7.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

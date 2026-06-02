@@ -1,6 +1,8 @@
 # Apps Script backend for the assessment sheet
 
-This receives each completed run from the web-app and appends a row.
+`doPost` receives each completed run from the web-app and appends a row.
+`doGet` returns every row as JSON for the live reliability dashboard
+(`webapp/dashboard.html`), which reads the same `/exec` URL.
 
 ## One-time setup
 
@@ -25,6 +27,11 @@ This receives each completed run from the web-app and appends a row.
 Apps Script keeps the same `/exec` URL only if you **Manage deployments ▸
 edit the existing deployment ▸ new version**. Creating a *new* deployment
 gives a new URL (update the `SHEET_ENDPOINT` secret if so).
+
+> **After adding `doGet` (the dashboard read-back), you must re-deploy a new
+> version** for it to go live. Edit the existing deployment so the `/exec` URL
+> and `SHEET_ENDPOINT` secret stay the same. Verify by opening the `/exec` URL
+> in a browser: it should return `{"ok":true,"rows":[...]}`.
 
 ## Notes
 - The script self-extends columns by name, so the randomised instrument

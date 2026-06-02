@@ -42,6 +42,30 @@ function doPost(e) {
   }
 }
 
+// Read-back for the live dashboard. Returns every data row as an object keyed by
+// the header row: { ok: true, rows: [ { participantToken: "BAKOR", ... }, ... ] }.
+// No formId gate: the data is anonymised (5-letter token only) and this is read-only.
+// A plain GET fetch to the /exec URL is a "simple request"; the googleusercontent
+// redirect carries Access-Control-Allow-Origin: *, so the browser dashboard can read it.
+function doGet(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+    var lastCol = sheet.getLastColumn();
+    var lastRow = sheet.getLastRow();
+    if (lastRow < 2 || lastCol < 1) return _json({ ok: true, rows: [] });
+    var values = sheet.getRange(1, 1, lastRow, lastCol).getValues();
+    var header = values[0];
+    var rows = values.slice(1).map(function (r) {
+      var o = {};
+      header.forEach(function (h, i) { if (h !== "") o[h] = r[i]; });
+      return o;
+    });
+    return _json({ ok: true, rows: rows });
+  } catch (err) {
+    return _json({ ok: false, error: String(err) });
+  }
+}
+
 function _json(obj) {
   return ContentService
     .createTextOutput(JSON.stringify(obj))
