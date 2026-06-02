@@ -39,6 +39,11 @@ jobs:
         with:
           enablement: true
 
+      - name: Inject runtime config from secrets
+        run: |
+          sed -i "s#__SHEET_ENDPOINT__#${{ secrets.SHEET_ENDPOINT }}#" webapp/js/config.js
+          sed -i "s#__SHEET_FORM_ID__#${{ secrets.SHEET_FORM_ID }}#" webapp/js/config.js
+
       - name: Upload the webapp as the Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
