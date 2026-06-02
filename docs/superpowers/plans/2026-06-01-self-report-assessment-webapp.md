@@ -12,6 +12,25 @@
 
 ---
 
+## Amendment (post-final-review): Lawton option identity
+
+A final review found that Lawton categories assign the same numeric value to
+multiple options within one radiogroup. SurveyJS keys selection by value, so
+duplicate values make distinct rows indistinguishable (wrong selection / wrong
+exported label). Fix applied in the built code (supersedes the Task 4 / Task 10 /
+Task 12 snippets below):
+
+- Lawton options use `{ label, value, score }` where `value` is a UNIQUE 0-based
+  index within the category and `score` is the form's 0/1.
+- `lawtonSum(items, responses)` resolves each item's chosen option by `value` and
+  sums its `score` (total 0–8) — it is no longer a `sumScore` alias.
+- `_responseRows` records an option's `score` (when present) as the exported value
+  and resolves the label from the now-unique value, so Lawton exports 0/1 + the
+  correct chosen label. Other instruments (no `score` field) are unchanged.
+
+Also applied: a once-per-survey completion guard (no attempt-counter inflation) and
+focus management on survey render. See tests in scoring/instruments/core test files.
+
 ## File Structure
 
 ```

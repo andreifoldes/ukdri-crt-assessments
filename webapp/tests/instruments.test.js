@@ -51,21 +51,43 @@ test("HADS has 7 anxiety + 7 depression items with literal option values", () =>
 
 require("../js/instruments/lawton-iadl.js");
 
-test("Lawton has 8 categories with printed 0/1 option values", () => {
+test("Lawton has 8 categories with unique option values and explicit 0/1 scores", () => {
   const d = captured["lawton"];
   assert.equal(d.items.length, 8);
   assert.equal(d.scoring.rule, "lawtonSum");
-  const vals = (id) => d.items.find((i) => i.id === id).options.map((o) => o.value);
-  assert.deepEqual(vals("lawton_A"), [1, 1, 1, 0]);   // Telephone
-  assert.deepEqual(vals("lawton_B"), [1, 0, 0, 0]);   // Shopping
-  assert.deepEqual(vals("lawton_C"), [1, 0, 0, 0]);   // Food prep
-  assert.deepEqual(vals("lawton_D"), [1, 1, 1, 1, 0]); // Housekeeping
-  assert.deepEqual(vals("lawton_E"), [1, 1, 0]);       // Laundry
-  assert.deepEqual(vals("lawton_F"), [1, 1, 1, 0, 0]); // Transport
-  assert.deepEqual(vals("lawton_G"), [1, 0, 0]);       // Medications
-  assert.deepEqual(vals("lawton_H"), [1, 1, 0]);       // Finances
-  // max possible = 8
-  const max = d.items.reduce((t, i) => t + Math.max(...i.options.map((o) => o.value)), 0);
+  const opts = (id) => d.items.find((i) => i.id === id).options;
+  const vals = (id) => opts(id).map((o) => o.value);
+  const scores = (id) => opts(id).map((o) => o.score);
+
+  // Each category's option `value`s are the unique sequence 0..n-1
+  const seqTo = (n) => Array.from({ length: n }, (_, i) => i);
+  assert.deepEqual(vals("lawton_A"), seqTo(4));
+  assert.deepEqual(vals("lawton_B"), seqTo(4));
+  assert.deepEqual(vals("lawton_C"), seqTo(4));
+  assert.deepEqual(vals("lawton_D"), seqTo(5));
+  assert.deepEqual(vals("lawton_E"), seqTo(3));
+  assert.deepEqual(vals("lawton_F"), seqTo(5));
+  assert.deepEqual(vals("lawton_G"), seqTo(3));
+  assert.deepEqual(vals("lawton_H"), seqTo(3));
+
+  // Within each category the `value`s are unique (no duplicates)
+  for (const item of d.items) {
+    const vs = item.options.map((o) => o.value);
+    assert.equal(new Set(vs).size, vs.length, `${item.id} has duplicate values`);
+  }
+
+  // The `score` arrays match the source-PDF sequences exactly
+  assert.deepEqual(scores("lawton_A"), [1, 1, 1, 0]);   // Telephone
+  assert.deepEqual(scores("lawton_B"), [1, 0, 0, 0]);   // Shopping
+  assert.deepEqual(scores("lawton_C"), [1, 0, 0, 0]);   // Food prep
+  assert.deepEqual(scores("lawton_D"), [1, 1, 1, 1, 0]); // Housekeeping
+  assert.deepEqual(scores("lawton_E"), [1, 1, 0]);       // Laundry
+  assert.deepEqual(scores("lawton_F"), [1, 1, 1, 0, 0]); // Transport
+  assert.deepEqual(scores("lawton_G"), [1, 0, 0]);       // Medications
+  assert.deepEqual(scores("lawton_H"), [1, 1, 0]);       // Finances
+
+  // max possible total score across the 8 categories = 8
+  const max = d.items.reduce((t, i) => t + Math.max(...i.options.map((o) => o.score)), 0);
   assert.equal(max, 8);
 });
 

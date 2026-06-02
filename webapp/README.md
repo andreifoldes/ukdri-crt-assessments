@@ -23,6 +23,13 @@ Pair the two exports by `participantToken` and compare per-scale scores
 (e.g. ICC / Pearson). "Not you? Start as a new participant" issues a fresh token
 on shared devices.
 
+Notes:
+- The attempt counter is not capped: a third+ completion on the same browser is
+  recorded with `attempt` ≥ 3, so do not assume `attempt ∈ {1, 2}` when analysing.
+- In private/incognito mode `localStorage` does not persist: each session gets a
+  fresh token and `attempt` resets to 1, so the two runs cannot be paired. Such
+  exports carry `storagePersistent: false` — filter on it to exclude them.
+
 ## What gets exported
 
 Each completed battery downloads two files named
@@ -66,4 +73,3 @@ Then update the version number noted above.
 
 (Node 18+; this project was validated on Node 26. Use the glob form — a bare
 directory argument is not auto-discovered on all Node versions.)
-```

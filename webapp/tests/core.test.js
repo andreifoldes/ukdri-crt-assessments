@@ -104,3 +104,26 @@ test("toCSVRow emits a header + value row with leading metadata", () => {
   assert.ok(cols.includes("phq9_band_total"));
   assert.equal(row.split(",")[cols.indexOf("phq9_score_total")], "4");
 });
+
+test("buildResults: duplicate-score options export the score + the CORRECT label (C1 regression)", () => {
+  // An instrument whose options share a score but have unique values (like Lawton).
+  const defsById = {
+    lawtonish: {
+      id: "lawtonish",
+      items: [{ id: "cat", type: "choice", options: [
+        { label: "first", value: 0, score: 1 },
+        { label: "second", value: 1, score: 1 },
+        { label: "none", value: 2, score: 0 },
+      ] }],
+      scoring: { rule: "lawtonSum" },
+    },
+  };
+  // participant selected the SECOND option (value 1)
+  const out = C.buildResults(["lawtonish"], defsById, { lawtonish: { cat: 1 } }, {
+    participantToken: "p_x", attempt: 1, storagePersistent: true, timestamp: "2026-06-01T00:00:00.000Z",
+  });
+  const row = out.instruments.lawtonish.responses[0];
+  assert.equal(row.value, 1, "exports the 0/1 score, not the selection index");
+  assert.equal(row.label, "second", "label must be the chosen option, not the first value-match");
+  assert.equal(out.instruments.lawtonish.scores.total, 1);
+});

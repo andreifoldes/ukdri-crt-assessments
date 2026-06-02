@@ -30,10 +30,28 @@ test("hadsSubscales sums values by subscale tag", () => {
   assert.deepEqual(S.hadsSubscales(items, responses), { anxiety: 5, depression: 1 });
 });
 
-test("lawtonSum sums the 0/1 option values across 8 categories", () => {
-  const items = Array.from({ length: 8 }, (_, i) => ({ id: "L" + i }));
-  const responses = { L0: 1, L1: 1, L2: 0, L3: 1, L4: 1, L5: 1, L6: 0, L7: 1 };
-  assert.equal(S.lawtonSum(items, responses), 6);
+test("lawtonSum resolves each chosen option by unique value and sums its score", () => {
+  // A category whose options share scores (duplicate-score) but have unique values.
+  const items = [
+    { id: "cat1", options: [
+      { label: "first", value: 0, score: 1 },
+      { label: "second", value: 1, score: 1 },
+      { label: "third", value: 2, score: 0 },
+    ] },
+    { id: "cat2", options: [
+      { label: "yes", value: 0, score: 1 },
+      { label: "no", value: 1, score: 0 },
+    ] },
+  ];
+  // (a) summing resolves by unique value to the right score total
+  assert.equal(S.lawtonSum(items, { cat1: 0, cat2: 0 }), 2);
+  // (b) choosing a second option that shares a score with another still totals correctly
+  assert.equal(S.lawtonSum(items, { cat1: 1, cat2: 0 }), 2);
+  // choosing the 0-score option in cat1
+  assert.equal(S.lawtonSum(items, { cat1: 2, cat2: 0 }), 1);
+  // (c) a missing response contributes 0
+  assert.equal(S.lawtonSum(items, { cat1: 0 }), 1);
+  assert.equal(S.lawtonSum(items, {}), 0);
 });
 
 test("parseTimeToMinutes handles 24h and AM/PM", () => {

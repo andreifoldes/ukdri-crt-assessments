@@ -18,9 +18,15 @@
     }
     return out;
   }
-  // Intentional alias for sumScore; kept separate in case sex-differentiated Lawton scoring is added later.
+  // Lawton IADL: each category is single-select; options carry a unique `value`
+  // (SurveyJS selection identity) and a separate 0/1 `score`. Resolve the chosen
+  // option by value and sum its score (total 0–8).
   function lawtonSum(items, responses) {
-    return sumScore(items, responses);
+    const r = responses || {};
+    return (items || []).reduce((total, item) => {
+      const opt = (item.options || []).find((o) => o.value === r[item.id]);
+      return total + (opt && Number.isFinite(opt.score) ? opt.score : 0);
+    }, 0);
   }
   function _num(v) { return Number.isFinite(v) ? v : null; }
 

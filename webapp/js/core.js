@@ -59,7 +59,10 @@
       const raw = responses[item.id];
       if (item.type === "choice") {
         const opt = (item.options || []).find((o) => o.value === raw);
-        rows.push({ itemId: item.id, value: raw, label: opt ? opt.label : null });
+        // Options that carry a separate `score` (Lawton) export the score, not the
+        // selection-identity value; the label is resolved from the unique value.
+        const recordedValue = (opt && opt.score !== undefined) ? opt.score : raw;
+        rows.push({ itemId: item.id, value: recordedValue, label: opt ? opt.label : null });
       } else {
         rows.push({ itemId: item.id, value: raw });
       }
@@ -212,6 +215,7 @@
     const debug = new URLSearchParams(location.search).get("debug") === "1";
 
     document.getElementById("begin-btn").addEventListener("click", () => {
+      let finished = false;   // guard: completion runs once per survey instance
       const order = shuffle(registry.map((d) => d.id));
       const completedHtml =
         '<div class="done"><h2>Thank you</h2>' +
@@ -223,6 +227,8 @@
       if (debug) survey.data = autofillData(order);
 
       survey.onComplete.add((sender) => {
+        if (finished) return;
+        finished = true;
         const responsesByInstrument = splitData(order, sender.data);
         const meta = {
           participantToken: info.token, attempt,
@@ -236,6 +242,8 @@
       landing.hidden = true;
       container.hidden = false;
       survey.render(container);
+      container.setAttribute("tabindex", "-1");
+      container.focus();
     });
   }
 
