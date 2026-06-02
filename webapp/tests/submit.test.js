@@ -18,6 +18,8 @@ test("flattenResults emits leading meta + per-instrument item/score/band keys", 
   assert.equal(row.storagePersistent, true);
   assert.equal(row.timestamp, "2026-06-02T10:00:00.000Z");
   assert.equal(row.presentationOrder, "phq9|ess");
+  assert.equal(row.phq9_position, 1);
+  assert.equal(row.ess_position, 2);
   assert.equal(row.phq9_item_q1, 2);
   assert.equal(row.phq9_score_total, 2);
   assert.equal(row.phq9_band_total, "minimal");
@@ -25,11 +27,14 @@ test("flattenResults emits leading meta + per-instrument item/score/band keys", 
   assert.equal(row.ess_score_total, 1);
 });
 
-test("flattenResults key SET is independent of presentation order", () => {
+test("flattenResults key SET is independent of presentation order, but _position values track it", () => {
   const reordered = Object.assign({}, sample, { presentationOrder: ["ess", "phq9"] });
+  const flat = Sub.flattenResults(reordered);
   const a = Object.keys(Sub.flattenResults(sample)).sort();
-  const b = Object.keys(Sub.flattenResults(reordered)).sort();
+  const b = Object.keys(flat).sort();
   assert.deepEqual(a, b);
+  assert.equal(flat.ess_position, 1);
+  assert.equal(flat.phq9_position, 2);
 });
 
 test("buildSubmitPayload wraps the row and includes formId", () => {

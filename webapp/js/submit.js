@@ -7,14 +7,18 @@
   // depend on presentationOrder, so the sheet stays stable across the
   // randomised instrument order.
   function flattenResults(results) {
+    const order = results.presentationOrder;
     const row = {
       participantToken: results.participantToken,
       attempt: results.attempt,
       storagePersistent: results.storagePersistent,
       timestamp: results.timestamp,
-      presentationOrder: results.presentationOrder.join("|"),
+      presentationOrder: order.join("|"),
     };
-    for (const id of results.presentationOrder) {
+    // Per-instrument 1-based slot in the randomised order, in its own cell
+    // (e.g. phq9_position = 3 means PHQ-9 was shown third) — for order-effect analysis.
+    order.forEach((id, i) => { row[id + "_position"] = i + 1; });
+    for (const id of order) {
       const block = results.instruments[id];
       if (!block) continue;
       for (const r of block.responses) row[id + "_item_" + r.itemId] = r.value;
