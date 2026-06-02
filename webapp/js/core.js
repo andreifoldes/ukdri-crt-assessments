@@ -301,12 +301,14 @@
       "<tr><td>" + r.label + "</td><td>" + r.v1 + "</td><td>" + r.v2 +
       '</td><td class="delta">' + fmtDelta(r.delta) + "</td></tr>"
     ).join("");
+    const pearsonTip = "Pearson correlation across the " + cmp.n + " paired scale scores (this attempt vs the previous): +1 = identical pattern, 0 = no linear relationship, −1 = opposite. Illustrative only (n = " + cmp.n + " scales).";
+    const spearmanTip = "Spearman rank correlation: like Pearson but based on the rank order of the " + cmp.n + " scale scores, so it is less affected by the scales having different ranges.";
     const corr = (cmp.pearson === null)
       ? "<p class=\"muted small\">Not enough overlapping scales to compute a consistency figure.</p>"
       : "<p>Within-person consistency across the " + cmp.n +
         " scale scores (illustrative only — not a formal reliability coefficient): " +
-        "Pearson r = " + cmp.pearson.toFixed(2) +
-        (cmp.spearman === null ? "" : "; Spearman ρ = " + cmp.spearman.toFixed(2)) + ".</p>";
+        '<abbr class="tip" title="' + pearsonTip + '">Pearson r</abbr> = ' + cmp.pearson.toFixed(2) +
+        (cmp.spearman === null ? "" : '; <abbr class="tip" title="' + spearmanTip + '">Spearman ρ</abbr> = ' + cmp.spearman.toFixed(2)) + ".</p>";
     return '<div class="retest"><h3>How your scores compare with your previous attempt</h3>' +
       "<table><thead><tr><th>Scale</th><th>Attempt " + prevAttempt + "</th><th>Attempt " + currAttempt +
       "</th><th>Change</th></tr></thead><tbody>" + rows + "</tbody></table>" + corr +
@@ -399,7 +401,7 @@
         '<p class="participant-id">Your ID: ' + info.token + '</p>' +
         '<p><button id="copy-id-done" class="secondary" type="button">Copy to clipboard</button> ' +
         '<span id="copy-feedback-done" class="id-feedback"></span></p>' +
-        "<p>Your responses are complete. Please download your results file(s) and return them as instructed.</p>" +
+        "<p>Your responses are complete.</p>" +
         '<button id="dl-json" class="primary" type="button">Download results (JSON)</button> ' +
         '<button id="dl-csv" class="primary" type="button">Download results (CSV)</button>' +
         '<div id="retest-summary"></div></div>';
