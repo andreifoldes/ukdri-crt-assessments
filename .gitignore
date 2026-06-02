@@ -1,0 +1,7 @@
+# Source assessment forms are not published (copyright); kept locally only.
+*.pdf
+
+# OS / tooling cruft
+.DS_Store
+.playwright-mcp/
+__pycache__/
