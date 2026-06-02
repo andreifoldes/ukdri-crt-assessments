@@ -8,11 +8,17 @@
 
   // ---------- pure helpers ----------
 
-  // Token is non-identifying (used only to pair a participant's two attempts); pseudo-randomness via Math.random is sufficient. randFn is injectable for tests.
+  // Non-identifying participant ID used only to pair a participant's two attempts.
+  // An easy-to-read pronounceable 5-letter code (consonant-vowel-consonant-vowel-
+  // consonant), e.g. "BAKOR", so participants can eyeball-match it across visits.
+  // ~171k combinations — fine for a workshop; extend the pattern if the cohort is
+  // large. randFn is injectable for tests; the `% length` guards randFn()===1.
   function makeToken(randFn) {
     const rnd = randFn || Math.random;
-    const hex = (n) => { const max = 16 ** n; return (Math.floor(rnd() * max) % max).toString(16).padStart(n, "0"); };
-    return "p_" + hex(8) + "-" + hex(4) + "-" + hex(4) + "-" + hex(8);
+    const C = "BCDFGHJKLMNPRSTVWXZ"; // consonants (excludes Q, Y)
+    const V = "AEIOU";
+    const pick = (s) => s[Math.floor(rnd() * s.length) % s.length];
+    return pick(C) + pick(V) + pick(C) + pick(V) + pick(C);
   }
 
   function nextAttempt(store) {
@@ -194,6 +200,7 @@
 
     const info = ensureToken();
     const attempt = nextAttempt({ completed: info.completed });
+    document.getElementById("participant-id").textContent = "Your ID: " + info.token;
     document.getElementById("attempt-note").textContent =
       "This will be attempt " + attempt +
       (info.persistent ? "" : " — note: persistent storage is unavailable, so test-retest pairing may not work.");
@@ -219,6 +226,7 @@
       const order = shuffle(registry.map((d) => d.id));
       const completedHtml =
         '<div class="done"><h2>Thank you</h2>' +
+        '<p class="participant-id">Your ID: ' + info.token + '</p>' +
         "<p>Your responses are complete. Please download your results file(s) and return them as instructed.</p>" +
         '<button id="dl-json" class="primary" type="button">Download results (JSON)</button> ' +
         '<button id="dl-csv" class="primary" type="button">Download results (CSV)</button></div>';

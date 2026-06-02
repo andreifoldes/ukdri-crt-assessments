@@ -2,14 +2,15 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const C = require("../js/core.js");
 
-test("makeToken produces a stable p_ prefixed id from injected randomness", () => {
+test("makeToken produces a pronounceable 5-letter CVCVC code", () => {
   const t = C.makeToken(() => 0.5);
-  assert.match(t, /^p_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{8}$/);
+  assert.match(t, /^[BCDFGHJKLMNPRSTVWXZ][AEIOU][BCDFGHJKLMNPRSTVWXZ][AEIOU][BCDFGHJKLMNPRSTVWXZ]$/);
 });
 
-test("makeToken with randFn returning near-1.0 still produces a valid token (overflow guard)", () => {
+test("makeToken with randFn returning near-1.0 stays in range (no overflow)", () => {
   const t = C.makeToken(() => 0.999999);
-  assert.match(t, /^p_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{8}$/);
+  assert.match(t, /^[BCDFGHJKLMNPRSTVWXZ][AEIOU][BCDFGHJKLMNPRSTVWXZ][AEIOU][BCDFGHJKLMNPRSTVWXZ]$/);
+  assert.equal(t.length, 5);
 });
 
 test("nextAttempt increments a numeric counter starting at 1", () => {
