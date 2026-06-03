@@ -13,6 +13,7 @@
       <h1>Self-Report Assessments</h1>
       <p class="event-info muted">UK DRI · CR&amp;T Centre Meeting<br /><span class="event-date">2 June 2026</span></p>
       <p>This set of five short questionnaires takes about 15–20 minutes. They appear in a random order.</p>
+      <p>We've randomly generated a unique ID for you (shown below). During the workshop you'll answer these questionnaires twice so we can look at their <strong>test–retest reliability</strong> — in plain terms, whether a questionnaire gives you a similar score when you answer it on two separate occasions. Your ID is simply what lets us match your two sets of answers to each other, without knowing who you are. We'll delete the collected data once the workshop ends.</p>
       <p id="participant-id" class="participant-id"></p>
       <p class="muted small">
         <button id="copy-id-btn" class="secondary" type="button">Copy to clipboard</button>
@@ -22,12 +23,17 @@
       <p class="muted small">Your responses are anonymous. This ID is the only thing that links your <strong>attempt&nbsp;1</strong> and <strong>attempt&nbsp;2</strong> results, so please note it and use the <strong>same</strong> ID on both attempts.</p>
       <p class="muted small">Your anonymous responses are saved securely to the organisers' spreadsheet so we can measure the questionnaires' reliability.</p>
       <div class="decision">
-        <p class="d-q">On your second attempt, check the ID above: is it the same as the one from your first attempt?</p>
-        <div class="funnel funnel-yes">
+        <label class="d-q" for="same-id-select">On your second attempt, check the ID above: is it the same as the one from your first attempt?</label>
+        <select id="same-id-select" class="d-select">
+          <option value="" selected>Choose one…</option>
+          <option value="same">Yes — it's the same ID</option>
+          <option value="different">No — it's different</option>
+        </select>
+        <div class="funnel funnel-yes" hidden>
           <span class="d-tag d-yes">Same</span>
           <p>Just press <strong>Begin</strong>.</p>
         </div>
-        <div class="funnel funnel-no">
+        <div class="funnel funnel-no" hidden>
           <span class="d-tag d-no">Different</span>
           <p>Type the ID from your first attempt below, press <strong>Use this ID</strong>, then press <strong>Begin</strong>.</p>
           <div class="d-returning">

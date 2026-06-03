@@ -29,7 +29,8 @@ h1 { font-size: 1.6rem; }
 .event-info { margin: 0.25rem 0 1rem; font-size: 1.05rem; }
 .event-date { font-size: 0.95rem; }
 .decision { max-width: 32rem; margin: 0.4rem 0 1rem; font-size: 0.92rem; }
-.decision .d-q { font-weight: 600; margin: 0 0 0.6rem; }
+.decision .d-q { display: block; font-weight: 600; margin: 0 0 0.6rem; }
+.d-select { font: inherit; padding: 0.4rem 0.6rem; border: 1px solid #c4c4c4; border-radius: 8px; background: #fff; max-width: 100%; }
 .funnel { border: 1px solid #d0d0d0; border-left-width: 5px; border-radius: 8px; padding: 0.6rem 0.9rem; margin-top: 0.6rem; background: #fff; }
 .funnel-yes { border-left-color: var(--better); }
 .funnel-no { border-left-color: var(--worse); }

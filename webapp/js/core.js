@@ -376,6 +376,20 @@
     document.getElementById("set-id-btn").addEventListener("click", applyEnteredId);
     idInput.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); applyEnteredId(); } });
 
+    // Reveal the matching Same/Different funnel only after the participant picks
+    // an answer from the dropdown.
+    const sameIdSelect = document.getElementById("same-id-select");
+    if (sameIdSelect) {
+      const funnelYes = document.querySelector(".funnel-yes");
+      const funnelNo = document.querySelector(".funnel-no");
+      const syncFunnels = () => {
+        funnelYes.hidden = sameIdSelect.value !== "same";
+        funnelNo.hidden = sameIdSelect.value !== "different";
+      };
+      sameIdSelect.addEventListener("change", syncFunnels);
+      syncFunnels();
+    }
+
     // Copy ID to clipboard (landing button + completion-screen button via delegation below).
     function copyIdWithFeedback(feedbackEl) {
       copyText(info.token)
