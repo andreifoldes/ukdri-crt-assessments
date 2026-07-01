@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Self-Report Assessments</title>
+  <link rel="stylesheet" href="vendor/survey-core.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <section id="screen-landing">
+      <h1>Self-Report Assessments</h1>
+      <p class="event-info muted">UK DRI · CR&amp;T Centre Meeting<br /><span class="event-date">2 June 2026</span></p>
+      <p>This set of five short questionnaires takes about 15–20 minutes. They appear in a random order.</p>
+      <p>We've randomly generated a unique ID for you (shown below). During the workshop you'll answer these questionnaires twice so we can look at their <strong>test–retest reliability</strong> — in plain terms, whether a questionnaire gives you a similar score when you answer it on two separate occasions. Your ID is simply what lets us match your two sets of answers to each other, without knowing who you are. We'll delete the collected data once the workshop ends.</p>
+      <p id="participant-id" class="participant-id"></p>
+      <p class="muted small">
+        <button id="copy-id-btn" class="secondary" type="button">Copy to clipboard</button>
+        <span id="copy-feedback" class="id-feedback"></span>
+      </p>
+      <p id="attempt-note" class="muted"></p>
+      <p class="muted small">Your responses are anonymous. This ID is the only thing that links your <strong>attempt&nbsp;1</strong> and <strong>attempt&nbsp;2</strong> results, so please note it and use the <strong>same</strong> ID on both attempts.</p>
+      <p class="muted small">Your anonymous responses are saved securely to the organisers' spreadsheet so we can measure the questionnaires' reliability.</p>
+      <details class="decision-details">
+        <summary>On your second attempt…</summary>
+        <div class="decision">
+          <label class="d-q" for="same-id-select">On your second attempt, check the ID above: is it the same as the one from your first attempt?</label>
+          <select id="same-id-select" class="d-select">
+            <option value="" selected>Choose one…</option>
+            <option value="same">Yes — it's the same ID</option>
+            <option value="different">No — it's different</option>
+          </select>
+          <div class="funnel funnel-yes" hidden>
+            <span class="d-tag d-yes">Same</span>
+            <p>Just press <strong>Begin</strong>.</p>
+          </div>
+          <div class="funnel funnel-no" hidden>
+            <span class="d-tag d-no">Different</span>
+            <p>Type the ID from your first attempt below, press <strong>Use this ID</strong>, then press <strong>Begin</strong>.</p>
+            <div class="d-returning">
+              <label for="id-input">My ID:</label>
+              <input id="id-input" type="text" maxlength="5" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="e.g. BAKOR" />
+              <button id="set-id-btn" class="secondary" type="button">Use this ID</button>
+              <span id="id-feedback" class="id-feedback"></span>
+            </div>
+          </div>
+        </div>
+      </details>
+      <button id="begin-btn" class="primary" type="button">Begin</button>
+      <p class="muted small"><a href="#" id="reset-link">Not you? Start as a new participant</a></p>
+    </section>
+
+    <div id="surveyContainer" hidden></div>
+  </main>
+
+  <script src="vendor/survey.core.min.js"></script>
+  <script src="vendor/survey-js-ui.min.js"></script>
+  <script src="js/scoring.js"></script>
+  <script src="js/instruments/phq9.js"></script>
+  <script src="js/instruments/ess.js"></script>
+  <script src="js/instruments/hads.js"></script>
+  <script src="js/instruments/lawton-iadl.js"></script>
+  <script src="js/instruments/psqi.js"></script>
+  <script src="js/survey-adapter.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/submit.js"></script>
+  <script src="js/core.js"></script>
+</body>
+</html>

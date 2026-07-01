@@ -1,0 +1,51 @@
+# Source assessment forms are not published (copyright); kept locally only.
+*.pdf
+
+# OS / tooling cruft
+.DS_Store
+.playwright-mcp/
+__pycache__/
+
+# Secrets / local tooling config
+.mcp.json
+.vscode/
+.env
+.env.*
+
+# Research / analysis files — local only, not part of the Pages deploy
+.claude/
+.firecrawl/
+assets/
+docs/
+json/
+logs/
+temp/
+txt/
+downloads/
+pdfs/
+instrument_report_files/
+instrument_slides_files/
+mentions.db
+affiliations.csv
+prevalence.csv
+prevalence_clean.csv
+downloaded_ok.json
+missing_attachments.json
+oa_available.json
+instrument_psychometrics.json
+curation.yaml
+terms.yaml
+custom.scss
+_publish.yml
+build.sh
+instrument_report.qmd
+instrument_report.html
+instrument_slides.qmd
+instrument_slides.html
+instrument_slides.pptx
+presentation_tts.m4a
+presentation_tts.wav
+fetch_affiliations.py
+filter_cosmin.py
+preprocess_prevalence.py
+webapp/presentation.md

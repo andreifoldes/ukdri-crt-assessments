@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Why reliability matters · UKDRI–SSRC workshop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Editorial-clinical palette, shared with the dashboard. Also defines the
+       --color-* design tokens the embedded chart fragment expects. */
+    :root {
+      --paper: #f7f4ee; --paper-2: #fffdf8; --ink: #1c1b19; --ink-soft: #56524b;
+      --rule: #ddd6c9; --accent: #0072B2; --accent-deep: #11304a;
+      --color-text-primary: var(--ink);
+      --color-text-secondary: var(--ink-soft);
+      --color-background-secondary: #f1ece2;
+      --color-border-tertiary: var(--rule);
+      --border-radius-lg: 12px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink);
+      font-family: "Spline Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+    .masthead { background: var(--accent-deep); color: #f4efe6; border-bottom: 4px solid var(--accent); }
+    .masthead-inner { max-width: 920px; margin: 0 auto; padding: 1.6rem 1.5rem 1.3rem; }
+    .eyebrow { margin: 0 0 0.35rem; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: #8fb8d6; }
+    .masthead h1 { font-family: "Fraunces", Georgia, serif; font-weight: 600;
+      font-size: clamp(1.9rem, 4vw, 2.7rem); line-height: 1.04; margin: 0; letter-spacing: -0.01em; }
+    .masthead .subtitle { margin: 0.6rem 0 0; max-width: 54ch; color: #d6cfc1; font-size: 1rem; }
+    .backlink { display: inline-block; margin-top: 0.9rem; font-size: 0.85rem; color: #8fb8d6; text-decoration: none; }
+    .backlink:hover { color: #fff; }
+    .container { max-width: 920px; margin: 0 auto; padding: 1.6rem 1.5rem; }
+    .lead { font-size: 1.04rem; max-width: 64ch; color: var(--ink); }
+    .lead em { font-style: normal; color: var(--accent-deep); font-weight: 600; }
+    .card { background: var(--paper-2); border: 1px solid var(--rule); border-radius: 14px;
+      padding: 1.2rem 1.3rem 1.4rem; margin-top: 1.3rem; box-shadow: 0 1px 0 rgba(28,27,25,0.03); }
+    .takeaway { margin-top: 1.3rem; font-size: 0.95rem; color: var(--ink-soft); max-width: 64ch; }
+    .takeaway strong { color: var(--accent-deep); }
+    input[type="range"] { accent-color: var(--accent); }
+    .credit { max-width: 920px; margin: 0 auto; padding: 0 1.5rem; }
+    .credit p { font-size: 0.85rem; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 0.9rem; margin: 1.4rem 0 2.6rem; }
+    .credit a { color: var(--accent); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <p class="eyebrow">UKDRI–SSRC workshop</p>
+      <h1>Why reliability matters</h1>
+      <a class="backlink" href="dashboard.html">← Back to the live reliability dashboard</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <div id="icc-host"></div>
+    </div>
+    <p class="takeaway"><a href="https://www.medrxiv.org/content/10.64898/2026.06.12.26355520v1.full-text" target="_blank" rel="noopener" style="color:var(--accent)">Read the preprint on medRxiv</a></p>
+  </main>
+
+  <footer class="credit">
+    <p>Interactive chart created by
+      <a href="https://www.surrey.ac.uk/people/ciro-della-monica" target="_blank" rel="noopener">Ciro Della Monica</a>
+      (University of Surrey).</p>
+  </footer>
+
+  <script src="vendor/chart.umd.min.js"></script>
+  <script src="js/icc-chart.js?v=2"></script>
+  <script>renderIccExplainer(document.getElementById("icc-host"));</script>
+</body>
+</html>

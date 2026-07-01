@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reliability dashboard · UKDRI–SSRC workshop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/dashboard.css?v=6" />
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="title-block">
+        <p class="eyebrow">UKDRI–SSRC workshop · live</p>
+        <h1>Assessment reliability <span class="qual">test–retest</span></h1>
+      </div>
+      <dl class="stats">
+        <div><dt>Runs</dt><dd id="run-count">0</dd></div>
+        <div><dt>Paired</dt><dd id="pair-count">0</dd></div>
+        <div><dt>Updated</dt><dd id="last-updated">—</dd></div>
+      </dl>
+    </div>
+    <div class="meta-strip">
+      <span id="status" class="status">connecting…</span>
+      <span class="source-note">Source: <span id="source">—</span> · auto-refreshes every 20s</span>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Analysis view">
+    <button class="tab active" data-tab="retest">Test–retest</button>
+    <button class="tab" data-tab="convergent">Cross-instrument</button>
+    <button class="tab" data-tab="icc">Why ICC?</button>
+  </nav>
+
+  <main class="container">
+    <section id="panel-retest" class="panel">
+      <div class="card forest-card">
+        <h2>Per-scale agreement <span class="legend">poor · fair · good · excellent (Cicchetti)</span></h2>
+        <div id="forest" class="chart-host"></div>
+      </div>
+      <div class="detail-row">
+        <div class="controls">
+          <label for="scale-select">Scale</label>
+          <select id="scale-select"></select>
+        </div>
+      </div>
+      <div class="card-grid">
+        <div class="card"><h3>Attempt 1 vs Attempt 2</h3><div id="scatter" class="chart-host"></div></div>
+        <div class="card"><h3>Bland–Altman</h3><div id="ba" class="chart-host"></div></div>
+      </div>
+
+      <div class="card methods">
+        <h2>The mathematics <span class="legend">exactly what the dashboard computes</span></h2>
+
+        <details class="method">
+          <summary>ICC(2,1) — the forest-plot statistic</summary>
+          <div class="method-body">
+            <p>Each participant is measured on <strong>k&nbsp;=&nbsp;2</strong> attempts. A two-way
+              ANOVA splits the total variation into three mean squares — between participants
+              (rows), between attempts (columns), and residual noise — and the
+              <em>two-way random, single-measurement, absolute-agreement</em> ICC combines them as:</p>
+
+            <p class="formula">
+              ICC(2,1) =
+              <span class="frac">
+                <span class="num">MS<sub>R</sub> − MS<sub>E</sub></span>
+                <span class="den">MS<sub>R</sub> + (k−1)·MS<sub>E</sub> + <span class="frac inline"><span class="num">k</span><span class="den">n</span></span>(MS<sub>C</sub> − MS<sub>E</sub>)</span>
+              </span>
+            </p>
+
+            <ul class="where">
+              <li><b>MS<sub>R</sub></b> — between-participants mean square (the true signal we want)</li>
+              <li><b>MS<sub>C</sub></b> — between-attempts mean square (systematic drift from attempt&nbsp;1 to&nbsp;2)</li>
+              <li><b>MS<sub>E</sub></b> — residual mean square (measurement noise)</li>
+              <li><b>n</b> — number of participants with both attempts &nbsp;·&nbsp; <b>k</b>&nbsp;=&nbsp;2</li>
+            </ul>
+
+            <p>It reads as the share of total variance that reflects <em>real differences between
+              people</em> rather than measurement error. The <span class="mono">(k⁄n)(MS<sub>C</sub>&nbsp;−&nbsp;MS<sub>E</sub>)</span>
+              term keeps any systematic attempt-to-attempt shift in the denominator — so two attempts
+              that are perfectly correlated but offset (everyone scores 2 points higher the second time)
+              score <em>lower</em> than a plain correlation would. That is the "absolute agreement"
+              property: the dashboard rewards measurements that land on the <em>same number</em>, not
+              just ones that rise and fall together.</p>
+
+            <div class="eg">
+              <p class="eg-title">Worked example — 4 participants, 2 attempts</p>
+              <table class="eg-table">
+                <thead><tr><th>Participant</th><th>Attempt&nbsp;1 (x)</th><th>Attempt&nbsp;2 (y)</th><th>row mean</th></tr></thead>
+                <tbody>
+                  <tr><td>A</td><td>10</td><td>12</td><td>11.0</td></tr>
+                  <tr><td>B</td><td>18</td><td>16</td><td>17.0</td></tr>
+                  <tr><td>C</td><td>6</td><td>8</td><td>7.0</td></tr>
+                  <tr><td>D</td><td>14</td><td>13</td><td>13.5</td></tr>
+                </tbody>
+              </table>
+              <p>The two-way ANOVA on these 8 numbers (grand mean = 12.125) gives the three mean squares —
+                <span class="mono">MS<sub>R</sub> = 35.46</span> (participants are well spread out),
+                <span class="mono">MS<sub>C</sub> = 0.125</span> (attempt&nbsp;1 and&nbsp;2 averages barely differ),
+                <span class="mono">MS<sub>E</sub> = 2.125</span> (small residual noise). With <b>n = 4</b>, <b>k = 2</b>:</p>
+              <p class="formula small">
+                ICC =
+                <span class="frac">
+                  <span class="num">35.46 − 2.125</span>
+                  <span class="den">35.46 + 2.125 + (2⁄4)(0.125 − 2.125)</span>
+                </span>
+                =
+                <span class="frac"><span class="num">33.33</span><span class="den">36.58</span></span>
+                = 0.91
+              </p>
+              <p class="eg-read">ICC ≈ 0.91 → <b>excellent</b> agreement: the gap between a person's two
+                attempts is tiny compared with how much people differ from each other.</p>
+            </div>
+
+            <p class="fineprint">The whiskers are a 95% confidence interval — an F-based interval
+              (McGraw&nbsp;&amp; Wong 1996, case&nbsp;A,1) with Satterthwaite degrees of freedom. The
+              F-quantiles are evaluated from the regularised incomplete beta function in
+              <span class="mono">js/stats.js</span>, so the page needs no statistics library. This is
+              the same number R's <span class="mono">irr::icc("twoway","agreement","single")</span>
+              returns.</p>
+          </div>
+        </details>
+
+        <details class="method">
+          <summary>Bland–Altman — the agreement plot</summary>
+          <div class="method-body">
+            <p>For each paired measurement <span class="mono">(x<sub>i</sub>, y<sub>i</sub>)</span> —
+              two attempts, or two instruments — we take the difference and the average:</p>
+
+            <p class="formula">
+              d<sub>i</sub> = x<sub>i</sub> − y<sub>i</sub>
+              <span class="sep">·</span>
+              m<sub>i</sub> =
+              <span class="frac"><span class="num">x<sub>i</sub> + y<sub>i</sub></span><span class="den">2</span></span>
+            </p>
+
+            <p>then plot <span class="mono">d<sub>i</sub></span> against <span class="mono">m<sub>i</sub></span>
+              and draw three reference lines:</p>
+
+            <ul class="where">
+              <li><b>bias</b> = <span class="mono">d̄</span> — the mean difference (systematic over- or under-estimation)</li>
+              <li><b>limits of agreement</b> = <span class="mono">d̄ ± 1.96·SD(d)</span> — the band that holds ≈95% of differences</li>
+            </ul>
+
+            <div class="eg">
+              <p class="eg-title">Worked example — the same 4 participants</p>
+              <p>The differences <span class="mono">d = x − y</span> are
+                <span class="mono">−2, +2, −2, +1</span>. From those four numbers alone:</p>
+              <ul class="where">
+                <li><b>bias</b> = mean(d) = <span class="mono">(−2 + 2 − 2 + 1) ⁄ 4 = −0.25</span></li>
+                <li><b>SD(d)</b> = sample standard deviation of the differences = <span class="mono">2.06</span></li>
+                <li><b>limits of agreement</b> = <span class="mono">−0.25 ± 1.96 × 2.06 = [−4.3, +3.8]</span></li>
+              </ul>
+              <p class="eg-read">A bias of just −0.25 means there is no real systematic drift between
+                attempts; the band <span class="mono">[−4.3, +3.8]</span> is where ≈95% of individual
+                attempt-to-attempt differences land.</p>
+            </div>
+
+            <p>A correlation tells you whether two measures <em>move together</em>; Bland–Altman tells
+              you <em>how far apart</em> they actually are, and whether that gap grows with the size of
+              the score. For cross-instrument pairs on different scales (e.g. PSQI&nbsp;0–21 vs
+              ESS&nbsp;0–24) each measure is converted to a <span class="mono">z</span>-score first, so
+              the difference is unit-free and the bias is interpretable.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="panel-convergent" class="panel hidden">
+      <div class="detail-row">
+        <div class="controls">
+          <label for="pair-select">Instrument pair</label>
+          <select id="pair-select"></select>
+        </div>
+        <p class="caption">Different instruments meant to capture the same construct, measured on each participant's first attempt.</p>
+      </div>
+      <div class="card-grid">
+        <div class="card"><h3>Score vs score</h3><div id="conv-scatter" class="chart-host"></div></div>
+        <div class="card"><h3>Bland–Altman (standardised)</h3><div id="conv-ba" class="chart-host"></div></div>
+      </div>
+    </section>
+
+    <section id="panel-icc" class="panel hidden">
+      <div class="card">
+        <div id="icc-host"></div>
+        <p class="caption" style="margin-top: 1rem;">Interactive chart by
+          <a href="https://www.surrey.ac.uk/people/ciro-della-monica" target="_blank" rel="noopener">Ciro Della Monica</a>
+          (University of Surrey). <a href="icc.html">Open as a full page →</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>New to ICC? <a href="icc.html">See why reliability matters →</a></p>
+    <p>Anonymous aggregate view — only a 5-letter participant token is used to pair attempts; no personal data is shown.</p>
+    <p class="ref">ICC interpretation bands — poor &lt;&nbsp;0.40 · fair 0.40–0.59 · good 0.60–0.74 · excellent &ge;&nbsp;0.75 — follow
+      Cicchetti, D.&nbsp;V. (1994). Guidelines, criteria, and rules of thumb for evaluating normed and standardized
+      assessment instruments in psychology. <em>Psychological Assessment, 6</em>(4), 284–290.
+      <a href="https://doi.org/10.1037/1040-3590.6.4.284" target="_blank" rel="noopener">doi:10.1037/1040-3590.6.4.284</a></p>
+  </footer>
+
+  <script src="vendor/d3.v7.min.js"></script>
+  <script src="vendor/chart.umd.min.js"></script>
+  <script src="js/config.js?v=5"></script>
+  <script src="js/stats.js?v=5"></script>
+  <script src="js/icc-chart.js?v=5"></script>
+  <script src="js/dashboard.js?v=5"></script>
+</body>
+</html>
